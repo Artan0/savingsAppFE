@@ -77,7 +77,7 @@ class Home extends Component {
                                                 </div>
                                                 <div className="mx-3 mt-1">
                                                     <StyledText>
-                                                        Wallet Balance: <br /> <b className="mt-2"> $34,956.50</b>
+                                                        Wallet Balance: <br /> <b className="mt-2"> $34,567.89</b>
                                                     </StyledText>
                                                 </div>
                                             </div>
