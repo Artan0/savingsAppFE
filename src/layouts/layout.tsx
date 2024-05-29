@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import CustomHeader from './common/header';
-import CustomFooter from './common/footer';
+import CustomHeader from '../components/common/header';
+import CustomFooter from '../components/common/footer';
 
 interface CustomLayoutProps {
     children: ReactNode;

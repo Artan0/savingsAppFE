@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CustomLayout from "../components/layout";
+import CustomLayout from "../layouts/layout";
 import mailPic from '../assets/images/send-mail.jpg';
 
 class Contact extends Component {

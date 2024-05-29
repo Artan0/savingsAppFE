@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CustomLayout from "../components/layout";
+import CustomLayout from "../layouts/layout";
 import { Col, Row } from "antd";
 import enespp from '../assets/images/pp.jpg';
 

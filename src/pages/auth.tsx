@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Layout, Input, Button, Form, message, Tabs, Col, Checkbox, DatePicker, Select } from 'antd';
-import CustomLayout from '../components/layout';
+import CustomLayout from '../layouts/layout';
 import axios from 'axios';
 import { AuthState } from '../types/authState';
 import { setAuthHeader } from '../helper/axios_helper';
