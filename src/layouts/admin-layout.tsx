@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Link, useLocation } from 'react-router-dom';
 import CustomHeader from '../components/common/header';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -48,6 +49,11 @@ const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
+    const location = useLocation();
+
+    const breadcrumbItems = location.pathname === '/goals'
+        ? ['Home', 'Goals']
+        : ['Home', 'User', 'Bill'];
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -59,8 +65,11 @@ const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
                 <CustomHeader />
                 <Content style={{ margin: '0 16px' }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
-                        <Breadcrumb.Item>User</Breadcrumb.Item>
-                        <Breadcrumb.Item>Bill</Breadcrumb.Item>
+                        {breadcrumbItems.map((item, index) => (
+                            <Breadcrumb.Item key={index}>
+                                {item === 'Home' ? <Link to="/">{item}</Link> : item}
+                            </Breadcrumb.Item>
+                        ))}
                     </Breadcrumb>
                     <div>
                         {children}
