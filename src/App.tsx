@@ -5,6 +5,7 @@ import Auth from './pages/auth';
 import Contact from './pages/contact';
 import AboutUs from './pages/aboutus';
 import Goals from './pages/goals';
+import AddGoal from './pages/add-goal';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/about' element={<AboutUs />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/goals' element={<Goals />} />
+        <Route path='/add-goal' element={<AddGoal />} />
         {/*routes here*/}
       </Routes>
     </Router>

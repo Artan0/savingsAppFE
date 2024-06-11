@@ -27,8 +27,8 @@ class AboutUs extends Component {
                     <br></br>
                     <br></br>
                     <br></br>
-                    <div className="row d-flex justify-content-around" mb-4>
-                        <div className="col-5" style={{ border: 'solid', borderWidth: '1px' }}>
+                    <div className="row d-flex justify-content-around" mb-4 >
+                        <div className="col-5" style={{boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'}}>
                             <div className="container d-flex flex-column">
                                 <div className="container d-flex justify-content-between border-bottom" style={{ height: '150px' }}>
                                     <h3 className="mt-5">Artan Bajram - <span style={{ fontSize: '24px' }}>Student at FCSE</span></h3>
@@ -51,7 +51,7 @@ class AboutUs extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-5" style={{ border: 'solid', borderWidth: '1px' }}>
+                        <div className="col-5" style={{boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'}}>
                             <div className="container d-flex flex-column">
                                 <div className="container d-flex justify-content-between border-bottom" style={{ height: '150px' }}>
                                     <h3 className="mt-5">Enes Sejfovski - <span style={{ fontSize: '24px' }}>Student at FCSE</span></h3>
