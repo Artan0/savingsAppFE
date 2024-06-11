@@ -1,32 +1,35 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState } from "react";
+import { Form, Input, Button, DatePicker, InputNumber, message } from "antd";
 import CustomLayout from "../layouts/layout";
-import { Goal } from "../types/AddGoalDTO";
+import { Goal } from "../types/Goal";
 import axios from "axios";
-import { message } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 const AddGoal: React.FC = () => {
   const [goal, setGoal] = useState<Goal>({
     title: "",
     description: "",
-    currentAmount: 0,
-    targetAmount: 0,
-    finishDate: "",
+    currentAmt: 0,
+    targetAmt: 0,
+    targetDate: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleChange = (name: string, value: any) => {
     setGoal((prevGoal) => ({
       ...prevGoal,
       [name]: value,
     }));
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
-      const body = { ...goal };
+      const body = {
+        ...goal,
+        targetDate: goal.targetDate// Format date correctly
+      };
       const token = localStorage.getItem('auth_token');
       console.log("Token:", token); // Debugging log
+      console.log("Payload:", body); // Debugging log
       await axios.post("http://localhost:8081/api/newGoal", body, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -39,105 +42,83 @@ const AddGoal: React.FC = () => {
     }
   };
 
-
-  const styles = {
-    input_field: {
-      width: '350px',
-      height: '35px',
-      marginBottom: '30px',
-    },
-    input_label: {
-      fontSize: '18px',
-      marginBottom: '10px',
-      fontWeight: 'bolder',
-      color: '#0a2540',
-    },
-    sbmt_btn: {
-      marginLeft: '-55px',
-      backgroundColor: '#0a2540',
-      color: 'white',
-      fontSize: '14px',
-      fontWeight: 'bolder',
-      border: 'none',
-      width: '150px',
-      height: '40px',
-      borderRadius: '5px',
-    },
-  };
-
   return (
     <CustomLayout>
-      <div className="container" style={{ marginTop: '50px', marginBottom: '100px' }}>
-        <h2 className="fw-bolder" style={{ marginBottom: '75px' }}>
+      <div style={{ marginTop: '50px', marginBottom: '100px' }}>
+        <h2 style={{ marginBottom: '75px' }}>
           Set Your Next Achievement in Motion: Add Your Goal Below!
         </h2>
-        <div className="container d-flex justify-content-center align-items-center">
-          <form onSubmit={handleSubmit} className="pt-4" style={{ width: '850px' }}>
-            <div className="row">
-              <div className="col">
-                <label style={styles.input_label} className="fw-bolder">Title*</label><br />
-                <input
-                  style={styles.input_field}
-                  type="text"
-                  name="title"
-                  value={goal.title}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="col">
-                <label style={styles.input_label} className="fw-bolder">Description</label><br />
-                <input
-                  style={styles.input_field}
-                  type="text"
-                  name="description"
-                  value={goal.description}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col">
-                <label style={styles.input_label} className="fw-bolder">Current amount*</label><br />
-                <input
-                  style={styles.input_field}
-                  type="number"
-                  name="currentAmount"
-                  value={goal.currentAmount}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="col">
-                <label style={styles.input_label} className="fw-bolder">Target amount*</label><br />
-                <input
-                  style={styles.input_field}
-                  type="number"
-                  name="targetAmount"
-                  value={goal.targetAmount}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col">
-                <label style={styles.input_label} className="fw-bolder">Finish date*</label><br />
-                <input
-                  style={styles.input_field}
-                  type="date"
-                  name="finishDate"
-                  value={goal.finishDate}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="col d-flex justify-content-center align-items-center" style={{ width: '50px' }}>
-                <button type="submit" style={styles.sbmt_btn}>Add goal!</button>
-              </div>
-            </div>
-          </form>
-        </div>
+        <Form
+          layout="vertical"
+          onFinish={handleSubmit}
+          initialValues={{
+            currentAmt: 0,
+            targetAmt: 0,
+            targetDate: ''
+          }}
+          style={{ maxWidth: '850px', margin: '0 auto' }}
+        >
+          <Form.Item
+            label="Title*"
+            name="title"
+            rules={[{ required: true, message: 'Please input the title!' }]}
+          >
+            <Input
+              value={goal.title}
+              onChange={(e) => handleChange("title", e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Description"
+            name="description"
+          >
+            <TextArea rows={4}
+              value={goal.description}
+              onChange={(e) => handleChange("description", e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Current amount*"
+            name="currentAmt"
+            rules={[{ required: true, message: 'Please input the current amount!' }]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              value={goal.currentAmt}
+              onChange={(value) => handleChange("currentAmt", value)}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Target amount*"
+            name="targetAmt"
+            rules={[{ required: true, message: 'Please input the target amount!' }]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              value={goal.targetAmt}
+              onChange={(value) => handleChange("targetAmt", value)}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Finish date*"
+            name="targetDate"
+            rules={[{ required: true, message: 'Please select the finish date!' }]}
+          >
+            <DatePicker
+              style={{ width: '100%' }}
+              value={goal.targetDate ? (goal.targetDate) : null}
+              onChange={(date) => handleChange("targetDate", date ? date.format('YYYY-MM-DD') : '')}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+              Add goal
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
     </CustomLayout>
   );
 };
 
 export default AddGoal;
-
