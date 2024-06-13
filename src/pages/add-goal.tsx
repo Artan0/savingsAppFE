@@ -9,8 +9,8 @@ const AddGoal: React.FC = () => {
   const [goal, setGoal] = useState<Goal>({
     title: "",
     description: "",
-    currentAmt: 0,
-    targetAmt: 0,
+    currentAmount: 0,
+    targetAmount: 0,
     targetDate: "",
   });
 
@@ -84,7 +84,7 @@ const AddGoal: React.FC = () => {
           >
             <InputNumber
               style={{ width: '100%' }}
-              value={goal.currentAmt}
+              value={goal.currentAmount}
               onChange={(value) => handleChange("currentAmt", value)}
             />
           </Form.Item>
@@ -95,7 +95,7 @@ const AddGoal: React.FC = () => {
           >
             <InputNumber
               style={{ width: '100%' }}
-              value={goal.targetAmt}
+              value={goal.targetAmount}
               onChange={(value) => handleChange("targetAmt", value)}
             />
           </Form.Item>

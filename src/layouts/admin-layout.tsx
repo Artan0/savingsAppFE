@@ -1,17 +1,12 @@
 import React, { ReactNode, useState } from 'react';
-import {
-    DesktopOutlined,
-    FileOutlined,
-    PieChartOutlined,
-    TeamOutlined,
-    UserOutlined,
-} from '@ant-design/icons';
+import { PieChartOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import CustomHeader from '../components/common/header';
 
 const { Header, Content, Footer, Sider } = Layout;
+
 interface CustomLayoutProps {
     children: ReactNode;
 }
@@ -23,26 +18,16 @@ function getItem(
     key: React.Key,
     icon?: React.ReactNode,
     children?: MenuItem[],
+    onClick?: () => void,
 ): MenuItem {
     return {
         key,
         icon,
         children,
         label,
+        onClick,
     } as MenuItem;
 }
-
-const items: MenuItem[] = [
-    getItem('Option 1', '1', <PieChartOutlined />),
-    getItem('Option 2', '2', <DesktopOutlined />),
-    getItem('User', 'sub1', <UserOutlined />, [
-        getItem('Tom', '3'),
-        getItem('Bill', '4'),
-        getItem('Alex', '5'),
-    ]),
-    getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-    getItem('Files', '9', <FileOutlined />),
-];
 
 const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
     const [collapsed, setCollapsed] = useState(false);
@@ -50,10 +35,18 @@ const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
     const location = useLocation();
+    const navigate = useNavigate();
+
+    const items: MenuItem[] = [
+        getItem('My Goals', '1', <PieChartOutlined />, undefined, () => navigate('/goals')),
+        getItem('My Profile', '2', <UserOutlined />, undefined, () => navigate('/profile')),
+    ];
 
     const breadcrumbItems = location.pathname === '/goals'
         ? ['Home', 'Goals']
-        : ['Home', 'User', 'Bill'];
+        : location.pathname === '/profile'
+            ? ['Home', 'Profile']
+            : ['Home', 'User', 'Bill'];
 
     return (
         <Layout style={{ minHeight: '100vh' }}>

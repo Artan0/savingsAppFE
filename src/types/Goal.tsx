@@ -3,7 +3,7 @@ import React from "react";
 export interface Goal {
   title: string;
   description: string;
-  currentAmt: number;
-  targetAmt: number;
+  currentAmount: number;
+  targetAmount: number;
   targetDate: any;
 }
