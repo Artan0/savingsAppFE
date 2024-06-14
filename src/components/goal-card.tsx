@@ -35,7 +35,7 @@ const GoalCard: React.FC<GoalCardProps> = ({ id, title, description, currentAmou
   const progress = ((currentAmount / targetAmount) * 100).toFixed(2);
   return (
     <StyledCard hoverable >
-      <StyledLink to={`/goal/${id}`}> <Meta title={title} description={description} /></StyledLink>
+      <StyledLink to={`/goals/${id}`}> <Meta title={title} description={description} /></StyledLink>
       <ProgressContainer>
         <Progress percent={parseFloat(progress)} />
         <div>{`$${currentAmount} raised of $${targetAmount}`}</div>

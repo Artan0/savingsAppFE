@@ -8,22 +8,27 @@ import Goals from './pages/goals';
 import AddGoal from './pages/add-goal';
 import GoalDetails from './pages/Goal-details';
 import EditGoal from './pages/Edit-goal';
+import Profile from './pages/Profile';
+import { UserProvider } from './context/User-context';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/" element={<Home />} />
-        <Route path='/about' element={<AboutUs />} />
-        <Route path='/contact' element={<Contact />} />
-        <Route path='/goals' element={<Goals />} />
-        <Route path='/add-goal' element={<AddGoal />} />
-        <Route path='/goal/:id' element={<GoalDetails />} />
-        <Route path='/goal/edit/:id' element={<EditGoal />} />
-        {/*routes here*/}
-      </Routes>
-    </Router>
+    <UserProvider>
+      <Router>
+        <Routes>
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/" element={<Home />} />
+          <Route path='/about' element={<AboutUs />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/goals' element={<Goals />} />
+          <Route path='/add-goal' element={<AddGoal />} />
+          <Route path='/goals/:id' element={<GoalDetails />} />
+          <Route path='/goal/edit/:id' element={<EditGoal />} />
+          <Route path='/profile' element={<Profile />} />
+          {/*routes here*/}
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 }
 
