@@ -100,6 +100,7 @@ const Goals: React.FC = () => {
                 {goals && goals.length > 0 && goals.map((goal: Goal, index: number) => (
                     <Col xs={24} sm={12} md={8} lg={6} key={index}>
                         <GoalCard
+                            id={goal.id}
                             title={goal.title}
                             description={goal.description}
                             currentAmount={goal.currentAmount}

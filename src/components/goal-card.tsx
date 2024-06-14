@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Progress } from "antd";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 
@@ -15,8 +16,12 @@ const StyledCard = styled(Card)`
 const ProgressContainer = styled.div`
   margin-top: 10px;
 `;
+const StyledLink = styled(Link)`
+  text-decoration:none;
+`
 
 interface GoalCardProps {
+  id?: number;
   title: string;
   description: string;
   currentAmount: number;
@@ -24,11 +29,13 @@ interface GoalCardProps {
   targetDate: string;
 }
 
-const GoalCard: React.FC<GoalCardProps> = ({ title, description, currentAmount, targetAmount, targetDate }) => {
+
+
+const GoalCard: React.FC<GoalCardProps> = ({ id, title, description, currentAmount, targetAmount, targetDate }) => {
   const progress = ((currentAmount / targetAmount) * 100).toFixed(2);
   return (
-    <StyledCard hoverable>
-      <Meta title={title} description={description} />
+    <StyledCard hoverable >
+      <StyledLink to={`/goal/${id}`}> <Meta title={title} description={description} /></StyledLink>
       <ProgressContainer>
         <Progress percent={parseFloat(progress)} />
         <div>{`$${currentAmount} raised of $${targetAmount}`}</div>

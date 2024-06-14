@@ -6,6 +6,8 @@ import Contact from './pages/contact';
 import AboutUs from './pages/aboutus';
 import Goals from './pages/goals';
 import AddGoal from './pages/add-goal';
+import GoalDetails from './pages/Goal-details';
+import EditGoal from './pages/Edit-goal';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path='/contact' element={<Contact />} />
         <Route path='/goals' element={<Goals />} />
         <Route path='/add-goal' element={<AddGoal />} />
+        <Route path='/goal/:id' element={<GoalDetails />} />
+        <Route path='/goal/edit/:id' element={<EditGoal />} />
         {/*routes here*/}
       </Routes>
     </Router>
