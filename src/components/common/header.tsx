@@ -1,17 +1,15 @@
-import * as React from 'react';
+import React from 'react';
 import { Header } from 'antd/es/layout/layout';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import styled, { keyframes, css } from 'styled-components';
 import logo from '../../assets/images/savings_app_logo_300_80.png';
 import { User } from '../../types/user';
-import { request, setAuthHeader } from '../../helper/axios_helper';
+import { useUser } from '../../context/User-context'; // Import useUser hook
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 
-interface CustomHeaderState {
-    loggedInUser: User | null;
-    data: any[];
-    isMenuOpen: boolean;
+interface CustomHeaderProps {
+    isMenuOpen: boolean; // Define prop for isMenuOpen
 }
 
 const StyledHeader = styled(Header)`
@@ -152,90 +150,50 @@ const MainContent = styled.main<{ $isMenuOpen: boolean }>`
     margin-top: ${({ $isMenuOpen }) => ($isMenuOpen ? '200px' : '0')};
 `;
 
-class CustomHeader extends React.Component<{}, CustomHeaderState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            loggedInUser: null,
-            data: [],
-            isMenuOpen: false
-        };
-    }
+const CustomHeader: React.FC<CustomHeaderProps> = ({ isMenuOpen }) => {
+    const { user, logout } = useUser();
 
-    componentDidMount() {
-        this.loadUserInfo();
-    }
-
-    loadUserInfo = () => {
-        request(
-            "GET",
-            "http://localhost:8081/user-info",
-            {}).then(
-                (response: any) => {
-                    this.setState({ loggedInUser: response.data });
-                }).catch(
-                    (error: any) => {
-                        if (error.response && error.response.status === 401) {
-                            this.handleLogout();
-                        } else if (error.response) {
-                            this.setState({ data: error.response.code });
-                        } else {
-                            console.error('Error fetching user info:', error);
-                        }
-                    }
-                );
-    }
-
-    handleLogout = () => {
-        setAuthHeader(null);
-        this.setState({ loggedInUser: null });
+    const toggleMenu = () => {
+        // Implement toggleMenu logic
     };
 
-    toggleMenu = () => {
-        this.setState((prevState) => ({ isMenuOpen: !prevState.isMenuOpen }));
-    };
+    return (
+        <>
+            <StyledHeader>
+                <Nav $isMenuOpen={isMenuOpen}>
+                    <Logo src={logo} alt="Logo" />
 
-    render() {
-        const { loggedInUser, isMenuOpen } = this.state;
+                    <NavList>
+                        <NavItem><Link to="/" style={{ textDecoration: 'none', color: '#fff' }}>Home</Link></NavItem>
+                        <NavItem><Link to="/contact" style={{ textDecoration: 'none', color: '#fff' }}>Contact</Link></NavItem>
+                        <NavItem><Link to="/about" style={{ textDecoration: 'none', color: '#fff' }}>About Us</Link></NavItem>
+                    </NavList>
+                    <UserSection>
+                        {user ? (
+                            <>
+                                <WelcomeMessage>Welcome, {user.firstName}</WelcomeMessage>
+                                <Button type="primary" onClick={logout}>Logout</Button>
+                            </>
+                        ) : (
+                            <AuthList>
+                                <Button type="primary" ><Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}>Login</Link></Button>
+                                <span className='mx-2'></span>
+                                <Button type="primary" ><Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}>Register</Link></Button>
+                            </AuthList>
+                        )}
+                    </UserSection>
+                </Nav>
 
-        return (
-            <>
-                <StyledHeader>
-                    <Nav $isMenuOpen={isMenuOpen}>
-                        <Logo src={logo} alt="Logo" />
-
-                        <NavList>
-                            <NavItem><Link to="/" style={{ textDecoration: 'none', color: '#fff' }}>Home</Link></NavItem>
-                            <NavItem><Link to="/contact" style={{ textDecoration: 'none', color: '#fff' }}>Contact</Link></NavItem>
-                            <NavItem><Link to="/about" style={{ textDecoration: 'none', color: '#fff' }}>About Us</Link></NavItem>
-                        </NavList>
-                        <UserSection>
-                            {loggedInUser ? (
-                                <>
-                                    <WelcomeMessage>Welcome, {loggedInUser.firstName}</WelcomeMessage>
-                                    <Button type="primary" onClick={this.handleLogout}>Logout</Button>
-                                </>
-                            ) : (
-                                <AuthList>
-                                    <Button type="primary" ><Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}>Login</Link></Button>
-                                    <span className='mx-2'></span>
-                                    <Button type="primary" ><Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}>Register</Link></Button>
-                                </AuthList>
-                            )}
-                        </UserSection>
-                    </Nav>
-
-                    {isMenuOpen ? (
-                        <CloseMenu onClick={this.toggleMenu} />
-                    ) : (
-                        <BurgerMenu onClick={this.toggleMenu} />
-                    )}
-                </StyledHeader>
-                <MainContent $isMenuOpen={isMenuOpen}>
-                </MainContent>
-            </>
-        );
-    }
-}
+                {isMenuOpen ? (
+                    <CloseMenu onClick={toggleMenu} />
+                ) : (
+                    <BurgerMenu onClick={toggleMenu} />
+                )}
+            </StyledHeader>
+            <MainContent $isMenuOpen={isMenuOpen}>
+            </MainContent>
+        </>
+    );
+};
 
 export default CustomHeader;

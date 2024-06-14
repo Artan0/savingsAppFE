@@ -38,7 +38,11 @@ const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
     const navigate = useNavigate();
 
     const [selectedKey, setSelectedKey] = useState<string>('1');
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    const toggleMenu = () => {
+        setIsMenuOpen(prevState => !prevState);
+    };
     const items: MenuItem[] = [
         getItem('My Goals', '1', <PieChartOutlined />, undefined, () => navigate('/goals')),
         getItem('My Profile', '2', <UserOutlined />, undefined, () => navigate('/profile')),
@@ -74,7 +78,7 @@ const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
                 />
             </Sider>
             <Layout>
-                <CustomHeader />
+                <CustomHeader isMenuOpen={isMenuOpen} />
                 <Content style={{ margin: '0 16px' }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
                         <Breadcrumb.Item>

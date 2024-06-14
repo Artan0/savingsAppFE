@@ -1,13 +1,13 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 import { User } from '../types/user';
+import { request } from '../helper/axios_helper';
 
 export interface UserContextProps {
     user: User | null;
     setUser: (user: User | null) => void;
     fetchUserInfo: () => void;
     logout: () => void;
-    loadUserInfo: () => void; // Add loadUserInfo to context props
 }
 
 interface UserProviderProps {
@@ -28,50 +28,29 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
-        loadUserInfo();
+        const token = localStorage.getItem('auth_token');
+        if (token) {
+            fetchUserInfo();
+        }
     }, []);
 
     const fetchUserInfo = async () => {
-        const token = localStorage.getItem('authToken');
-        if (token) {
-            try {
-                const response = await axios.get('http://localhost:8081/user-info', {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
-                setUser(response.data);
-            } catch (error) {
-                console.error('Error fetching user info:', error);
-                setUser(null); // Clear user state if fetching fails
-            }
-        }
-    };
-
-    const loadUserInfo = async () => {
-        const token = localStorage.getItem('authToken');
-        if (token) {
-            try {
-                const response = await axios.get('http://localhost:8081/user-info', {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
-                setUser(response.data);
-            } catch (error) {
-                console.error('Error fetching user info:', error);
-                setUser(null); // Clear user state if fetching fails
-            }
+        try {
+            const response = await request("GET", "/user-info", null);
+            setUser(response.data); // Assuming response.data is the user object
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+            setUser(null); // Clear user state if fetching fails
         }
     };
 
     const logout = () => {
-        localStorage.removeItem('authToken');
+        localStorage.removeItem('auth_token');
         setUser(null);
     };
 
     return (
-        <UserContext.Provider value={{ user, setUser, fetchUserInfo, logout, loadUserInfo }}>
+        <UserContext.Provider value={{ user, setUser, fetchUserInfo, logout }}>
             {children}
         </UserContext.Provider>
     );

@@ -3,38 +3,27 @@ import { Button, Modal, Form, Input, message, Card, Typography, DatePicker } fro
 import AdminLayout from '../layouts/admin-layout';
 import axios from 'axios';
 import moment from 'moment';
+import { useUser } from '../context/User-context'; // Import useUser hook
 
 const { Title, Text } = Typography;
 
 const Profile: React.FC = () => {
-    const [userData, setUserData] = useState<any>(null);
+    const { user, fetchUserInfo } = useUser();
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [form] = Form.useForm();
 
-    const fetchUserData = async () => {
-        try {
-            const token = localStorage.getItem('auth_token');
-            const response = await axios.get('/user-info', {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setUserData(response.data);
-        } catch (error) {
-            message.error('Failed to fetch user information');
-        }
-    };
-
     useEffect(() => {
-        fetchUserData();
+        fetchUserInfo();
     }, []);
 
     const handleEditProfile = () => {
         setEditModalVisible(true);
         form.setFieldsValue({
-            firstName: userData.firstName,
-            lastName: userData.lastName,
-            email: userData.email,
-            dateOfBirth: userData.dateOfBirth ? moment(userData.dateOfBirth, 'YYYY-MM-DD') : null,
-            phoneNumber: userData.phoneNumber
+            firstName: user?.firstName,
+            lastName: user?.lastName,
+            email: user?.email,
+            dateOfBirth: user?.dateOfBirth ? moment(user.dateOfBirth, 'YYYY-MM-DD') : null,
+            phoneNumber: user?.phoneNumber
         });
     };
 
@@ -42,7 +31,7 @@ const Profile: React.FC = () => {
         try {
             const token = localStorage.getItem('auth_token');
             const values = await form.validateFields();
-            await axios.put(`/update-profile/${userData.id}`, {
+            await axios.put(`/update-profile/${user?.id}`, {
                 firstName: values.firstName,
                 lastName: values.lastName,
                 email: values.email,
@@ -55,20 +44,10 @@ const Profile: React.FC = () => {
             });
             message.success('Profile updated successfully');
             setEditModalVisible(false);
-            fetchUserData();
+            fetchUserInfo(); // Fetch updated user info after save
         } catch (error: any) {
-            if (error.response) {
-                const { status } = error.response;
-                if (status === 401) {
-                    message.error('Unauthorized. Please log in again.');
-                } else if (status === 404) {
-                    message.error('User not found. Please refresh the page.');
-                } else {
-                    message.error('Failed to update profile');
-                }
-            } else {
-                message.error('Failed to update profile');
-            }
+            console.error('Failed to update profile:', error);
+            message.error('Failed to update profile');
         }
     };
 
@@ -78,21 +57,21 @@ const Profile: React.FC = () => {
 
     return (
         <AdminLayout>
-            {userData && (
+            {user && (
                 <Card title={<Title level={2}>Profile</Title>} bordered={false}>
                     <Card.Meta
                         avatar={<img src={"https://via.placeholder.com/150"} alt="Avatar" style={{ borderRadius: '50%', width: '80px', height: '80px' }} />}
-                        title={<Text strong>{`${userData.firstName} ${userData.lastName}`}</Text>}
+                        title={<Text strong>{`${user.firstName} ${user.lastName}`}</Text>}
                         description={
                             <div className='d-flex flex-column'>
                                 <Text>
-                                    Email: {userData.email}
+                                    Email: {user.email}
                                 </Text>
                                 <Text>
-                                    Date Of Birth: {userData.dateOfBirth ? moment(userData.dateOfBirth).format('YYYY-MM-DD') : 'N/A'}
+                                    Date Of Birth: {user.dateOfBirth ? moment(user.dateOfBirth).format('YYYY-MM-DD') : 'N/A'}
                                 </Text>
                                 <Text>
-                                    Phone Number: {userData.phoneNumber}
+                                    Phone Number: {user.phoneNumber}
                                 </Text>
                             </div>
                         }
