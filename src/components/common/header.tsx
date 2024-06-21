@@ -167,6 +167,15 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ isMenuOpen }) => {
                         <NavItem><Link to="/" style={{ textDecoration: 'none', color: '#fff' }}>Home</Link></NavItem>
                         <NavItem><Link to="/contact" style={{ textDecoration: 'none', color: '#fff' }}>Contact</Link></NavItem>
                         <NavItem><Link to="/about" style={{ textDecoration: 'none', color: '#fff' }}>About Us</Link></NavItem>
+                        {user ? (
+                            <>
+                                <NavItem><Link to="/dashboard" style={{ textDecoration: 'none', color: '#fff' }}>Dashboard</Link></NavItem>
+
+                            </>
+                        ) :
+                            (
+                                <></>
+                            )}
                     </NavList>
                     <UserSection>
                         {user ? (
@@ -176,9 +185,9 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ isMenuOpen }) => {
                             </>
                         ) : (
                             <AuthList>
-                                <Button type="primary" ><Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}>Login</Link></Button>
+                                <Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}><Button type="primary" >Login</Button></Link>
                                 <span className='mx-2'></span>
-                                <Button type="primary" ><Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}>Register</Link></Button>
+                                <Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}><Button type="primary" >Register</Button></Link>
                             </AuthList>
                         )}
                     </UserSection>

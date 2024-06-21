@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import { PieChartOutlined, UserOutlined } from '@ant-design/icons';
+import { PieChartOutlined, UserOutlined, AreaChartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -37,22 +37,25 @@ const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [selectedKey, setSelectedKey] = useState<string>('1');
+    const [selectedKey, setSelectedKey] = useState<string>('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuOpen(prevState => !prevState);
     };
     const items: MenuItem[] = [
-        getItem('My Goals', '1', <PieChartOutlined />, undefined, () => navigate('/goals')),
-        getItem('My Profile', '2', <UserOutlined />, undefined, () => navigate('/profile')),
+        getItem('Dashboard', '1', <AreaChartOutlined />, undefined, () => navigate('/dashboard')),
+        getItem('My Goals', '2', <PieChartOutlined />, undefined, () => navigate('/goals')),
+        getItem('My Profile', '3', <UserOutlined />, undefined, () => navigate('/profile')),
     ];
 
     useEffect(() => {
         if (location.pathname === '/goals') {
-            setSelectedKey('1');
-        } else if (location.pathname === '/profile') {
             setSelectedKey('2');
+        } else if (location.pathname === '/profile') {
+            setSelectedKey('3');
+        } else if (location.pathname === '/dashboard') {
+            setSelectedKey('1')
         }
     }, [location]);
 
@@ -70,7 +73,7 @@ const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
             <Sider style={{ backgroundColor: '#0a2540' }} collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
                 <div className="demo-logo-vertical" />
                 <Menu
-                    style={{ backgroundColor: '#0a2540' }}
+                    style={{ backgroundColor: '#0a2540', marginTop: '3.7rem' }}
                     theme='dark'
                     selectedKeys={[selectedKey]}
                     mode="inline"
