@@ -77,10 +77,12 @@ const AddGoal: React.FC = () => {
               onChange={(e) => handleChange("description", e.target.value)}
             />
           </Form.Item>
-          <Form.Item
-            label="Current amount*"
+          <div className="container d-flex justify-content-between">
+            <Form.Item
+            label="Take from wallet*"
             name="currentAmt"
             rules={[{ required: true, message: 'Please input the current amount!' }]}
+            style={{marginLeft:'-1%'}}
           >
             <InputNumber
               style={{ width: '100%' }}
@@ -88,8 +90,28 @@ const AddGoal: React.FC = () => {
               onChange={(value) => handleChange("currentAmt", value)}
             />
           </Form.Item>
+          <div className="" style={{marginRight:'15%'}}>
+            <h3>
+              Current wallet amount:
+            </h3>
+          <h4>$ 1234.00</h4>
+          </div>
+          
+          </div>
+          
           <Form.Item
             label="Target amount*"
+            name="targetAmt"
+            rules={[{ required: true, message: 'Please input the target amount!' }]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              value={goal.targetAmount}
+              onChange={(value) => handleChange("targetAmt", value)}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Periodical save amount"
             name="targetAmt"
             rules={[{ required: true, message: 'Please input the target amount!' }]}
           >
