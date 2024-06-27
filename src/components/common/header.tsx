@@ -181,13 +181,13 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ isMenuOpen }) => {
                         {user ? (
                             <>
                                 <WelcomeMessage>Welcome, {user.firstName}</WelcomeMessage>
-                                <Button type="primary" onClick={logout}>Logout</Button>
+                                <Button  onClick={logout}>Logout</Button>
                             </>
                         ) : (
                             <AuthList>
-                                <Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}><Button type="primary" >Login</Button></Link>
+                                <Link to="/auth" style={{ textDecoration: 'none', color: '#fff' ,}}><Button size="middle" shape="round" style={{ fontWeight:'500'}}>Login</Button></Link>
                                 <span className='mx-2'></span>
-                                <Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}><Button type="primary" >Register</Button></Link>
+                                <Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}><Button size="middle" shape="round" style={{ fontWeight:'500'}}>Register</Button></Link>
                             </AuthList>
                         )}
                     </UserSection>

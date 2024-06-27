@@ -20,11 +20,11 @@ class Contact extends Component {
                                 name="email"
                                 rules={[{ required: true, message: 'Please input the title!' }]}
                             >
-                                <Input placeholder="Your email adress"/>
+                                <Input size="large" placeholder="Your email adress"/>
                             </Form.Item>
                                 {/* <p className="input_label" style={{ fontSize: '18px' }}>Your text</p> */}
                                 {/* <textarea placeholder="Your text" name="mail-content" style={{ height: '100px', borderColor:'lightgray', borderRadius:'10px' }} /><br /><br /> */}
-                                <TextArea rows={4} placeholder="Your text" maxLength={6} /><br /><br />
+                                <TextArea rows={4} size="large" placeholder="Your text" maxLength={6} /><br /><br />
                                 <button type="submit" style={{ backgroundColor: '#0a2540',borderRadius:'15px', color: 'white', fontWeight: 'bolder', width: '250px', height: '45px', border: 'none' }}>Send!</button>
                             </div>
                             <div className="col-6">

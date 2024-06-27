@@ -4,6 +4,9 @@ import CustomLayout from "../layouts/layout";
 import { Goal } from "../types/Goal";
 import axios from "axios";
 import TextArea from "antd/es/input/TextArea";
+import { DownOutlined, SmileOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Dropdown, Space } from 'antd';
 
 const AddGoal: React.FC = () => {
   const [goal, setGoal] = useState<Goal>({
@@ -41,6 +44,37 @@ const AddGoal: React.FC = () => {
       message.error("Error adding goal");
     }
   };
+
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+          Daily
+        </a>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+          Weekly
+        </a>
+      ),
+      icon: <SmileOutlined />,
+      disabled: false,
+    },
+    {
+      key: '3',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+         Monthly
+        </a>
+      ),
+      disabled: false,
+    },
+    
+  ];
 
   return (
     <CustomLayout>
@@ -110,9 +144,10 @@ const AddGoal: React.FC = () => {
               onChange={(value) => handleChange("targetAmt", value)}
             />
           </Form.Item>
+          <div className="container d-flex justify-content-between">
           <Form.Item
             label="Periodical save amount"
-            name="targetAmt"
+            name="periodicalSave"
             rules={[{ required: true, message: 'Please input the target amount!' }]}
           >
             <InputNumber
@@ -121,6 +156,19 @@ const AddGoal: React.FC = () => {
               onChange={(value) => handleChange("targetAmt", value)}
             />
           </Form.Item>
+          <div className="" style={{marginRight:'15%'}}>
+            
+          </div>
+                <Dropdown menu={{ items }}>
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              Hover me
+              <DownOutlined />
+            </Space>
+          </a>
+        </Dropdown>
+          </div>
+          
           <Form.Item
             label="Finish date*"
             name="targetDate"
