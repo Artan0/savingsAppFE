@@ -37,10 +37,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     const fetchUserInfo = async () => {
         try {
             const response = await request("GET", "/user-info", null);
-            setUser(response.data); // Assuming response.data is the user object
+            setUser(response.data);
         } catch (error) {
             console.error('Error fetching user info:', error);
-            setUser(null); // Clear user state if fetching fails
+            setUser(null);
         }
     };
 

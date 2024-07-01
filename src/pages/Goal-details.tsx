@@ -60,6 +60,9 @@ const GoalDetails: React.FC = () => {
                     <Descriptions.Item label="Current Amount">{goal.currentAmount}</Descriptions.Item>
                     <Descriptions.Item label="Target Amount">{goal.targetAmount}</Descriptions.Item>
                     <Descriptions.Item label="Target Date">{goal.targetDate}</Descriptions.Item>
+                    <Descriptions.Item label="Savings Period">{goal.savingsPeriod}</Descriptions.Item>
+                    <Descriptions.Item label="Savings Amount">{goal.savingsAmount}</Descriptions.Item>
+
                 </Descriptions>
                 <div style={{ marginTop: '20px' }}>
                     <Button type="primary" onClick={handleEdit} style={{ marginRight: '10px' }}>

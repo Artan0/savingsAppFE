@@ -3,7 +3,7 @@ import { Button, Modal, Form, Input, message, Card, Typography, DatePicker } fro
 import AdminLayout from '../layouts/admin-layout';
 import axios from 'axios';
 import moment from 'moment';
-import { useUser } from '../context/User-context'; // Import useUser hook
+import { useUser } from '../context/User-context';
 
 const { Title, Text } = Typography;
 
@@ -23,7 +23,8 @@ const Profile: React.FC = () => {
             lastName: user?.lastName,
             email: user?.email,
             dateOfBirth: user?.dateOfBirth ? moment(user.dateOfBirth, 'YYYY-MM-DD') : null,
-            phoneNumber: user?.phoneNumber
+            phoneNumber: user?.phoneNumber,
+            budget: user?.budget
         });
     };
 
@@ -36,7 +37,8 @@ const Profile: React.FC = () => {
                 lastName: values.lastName,
                 email: values.email,
                 dateOfBirth: values.dateOfBirth ? values.dateOfBirth.format('YYYY-MM-DD') : null,
-                phoneNumber: values.phoneNumber
+                phoneNumber: values.phoneNumber,
+                budget: values.budget
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -72,6 +74,9 @@ const Profile: React.FC = () => {
                                 </Text>
                                 <Text>
                                     Phone Number: {user.phoneNumber}
+                                </Text>
+                                <Text>
+                                    Wallet balance: {user.budget}
                                 </Text>
                             </div>
                         }
@@ -124,6 +129,13 @@ const Profile: React.FC = () => {
                                 name="phoneNumber"
                                 label="Phone Number"
                                 rules={[{ required: true, message: 'Please enter your phone number' }]}
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                name="budget"
+                                label="Wallet Balance"
+                                rules={[{ required: true, message: 'Please enter your budget' }]}
                             >
                                 <Input />
                             </Form.Item>

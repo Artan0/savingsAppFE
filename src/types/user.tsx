@@ -1,8 +1,9 @@
 export interface User {
-    id?: number
+    id?: number,
     firstName: string
     lastName: string
     dateOfBirth: any
     phoneNumber: number
     email: string
+    budget: number
 }

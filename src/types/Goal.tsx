@@ -7,4 +7,6 @@ export interface Goal {
   currentAmount: number;
   targetAmount: number;
   targetDate: any;
+  savingsAmount: number;
+  savingsPeriod: string;
 }
