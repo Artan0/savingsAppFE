@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button, DatePicker, InputNumber, message } from "antd";
-import CustomLayout from "../layouts/layout";
+import CustomLayout from "../layouts/Layout";
 import { Goal } from "../types/Goal";
 import axios from "axios";
 import TextArea from "antd/es/input/TextArea";

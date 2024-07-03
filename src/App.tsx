@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/home'
-import Auth from './pages/auth';
-import Contact from './pages/contact';
-import AboutUs from './pages/aboutus';
-import Goals from './pages/goals';
-import AddGoal from './pages/add-goal';
+import Home from './pages/Home'
+import Auth from './pages/Auth';
+import Contact from './pages/Contact';
+import AboutUs from './pages/Aboutus';
+import Goals from './pages/Goals';
+import AddGoal from './pages/Add-goal';
 import GoalDetails from './pages/Goal-details';
 import EditGoal from './pages/Edit-goal';
 import Profile from './pages/Profile';

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import axios from 'axios';
-import { User } from '../types/user';
+import { User } from '../types/User';
 import { request } from '../helper/axios_helper';
 
 export interface UserContextProps {

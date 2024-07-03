@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button, Form, Input, InputNumber, DatePicker, message, Select } from 'antd';
-import AdminLayout from '../layouts/admin-layout';
+import AdminLayout from '../layouts/Admin-layout';
 import axios from 'axios';
 import { Goal } from '../types/Goal';
 import dayjs from 'dayjs';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, Input, message, Card, Typography, DatePicker } from 'antd';
-import AdminLayout from '../layouts/admin-layout';
+import AdminLayout from '../layouts/Admin-layout';
 import axios from 'axios';
 import moment from 'moment';
 import { useUser } from '../context/User-context';

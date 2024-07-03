@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CustomLayout from "../layouts/layout";
+import CustomLayout from "../layouts/Layout";
 import { Card, Col, Row, Button } from "antd";
 import styled from "styled-components";
 import cardImage from '../assets/images/Card 2.png'

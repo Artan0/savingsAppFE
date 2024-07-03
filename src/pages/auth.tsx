@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Layout, Input, Button, Form, message, Tabs, Col, Checkbox, DatePicker, Select } from 'antd';
-import CustomLayout from '../layouts/layout';
+import CustomLayout from '../layouts/Layout';
 import axios from 'axios';
-import { AuthState } from '../types/authState';
+import { AuthState } from '../types/AuthState';
 import { setAuthHeader } from '../helper/axios_helper';
 import loginImage from '../assets/images/sign-up.png';
-import { useUser } from '../context/User-context'; // Import useUser hook
+import { useUser } from '../context/User-context';
 
 const { Content } = Layout;
 const { TabPane } = Tabs;

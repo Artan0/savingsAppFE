@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import styled, { keyframes, css } from 'styled-components';
 import logo from '../../assets/images/savings_app_logo_300_80.png';
-import { User } from '../../types/user';
+import { User } from '../../types/User';
 import { useUser } from '../../context/User-context'; // Import useUser hook
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 
@@ -181,13 +181,13 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ isMenuOpen }) => {
                         {user ? (
                             <>
                                 <WelcomeMessage>Welcome, {user.firstName}</WelcomeMessage>
-                                <Button  onClick={logout}>Logout</Button>
+                                <Button onClick={logout}>Logout</Button>
                             </>
                         ) : (
                             <AuthList>
-                                <Link to="/auth" style={{ textDecoration: 'none', color: '#fff' ,}}><Button size="middle" shape="round" style={{ fontWeight:'500'}}>Login</Button></Link>
+                                <Link to="/auth" style={{ textDecoration: 'none', color: '#fff', }}><Button size="middle" shape="round" style={{ fontWeight: '500' }}>Login</Button></Link>
                                 <span className='mx-2'></span>
-                                <Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}><Button size="middle" shape="round" style={{ fontWeight:'500'}}>Register</Button></Link>
+                                <Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}><Button size="middle" shape="round" style={{ fontWeight: '500' }}>Register</Button></Link>
                             </AuthList>
                         )}
                     </UserSection>

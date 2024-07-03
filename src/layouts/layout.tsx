@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import CustomHeader from '../components/common/header';
-import CustomFooter from '../components/common/footer';
+import CustomFooter from '../components/common/Footer';
+import CustomHeader from '../components/common/Header';
 
 
 interface CustomLayoutProps {

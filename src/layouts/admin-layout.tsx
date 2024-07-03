@@ -3,7 +3,7 @@ import { PieChartOutlined, UserOutlined, AreaChartOutlined } from '@ant-design/i
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import CustomHeader from '../components/common/header';
+import CustomHeader from '../components/common/Header';
 
 const { Header, Content, Footer, Sider } = Layout;
 
