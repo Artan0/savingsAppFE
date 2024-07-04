@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import CustomLayout from "../layouts/Layout";
 import { Col, Row } from "antd";
 import enespp from '../assets/images/pp.jpg';
+import {FacebookFilled, GithubFilled, LinkedinFilled, InstagramFilled} from '@ant-design/icons';
 
 class AboutUs extends Component {
 
@@ -42,11 +43,11 @@ class AboutUs extends Component {
                                         distinctio in nihil inventore sit nostrum velit id ducimus quia ea reprehenderit nobis!
                                         Eos fugit officiis non possimus nesciunt in nulla repudiandae ut sint totam aut neque dicta
                                         qui distinctio aliquam hic nihil blanditiis!</p>
-                                    <ul className="mt-5" style={{ marginRight: '7%' }}>
-                                        <li>Link of social media</li>
-                                        <li>Link of social media</li>
-                                        <li>Link of social media</li>
-                                        <li>Link of social media</li>
+                                    <ul className="mt-5" style={{ marginRight: '7%', listStyle:'none' }}>
+                                    <li><GithubFilled /> Link of social media</li>
+                                        <li><LinkedinFilled /> vLink of social media</li>
+                                        <li><FacebookFilled /> Link of social media</li>
+                                        <li><InstagramFilled /> Link of social media</li>
                                     </ul>
                                 </div>
                             </div>
@@ -65,11 +66,11 @@ class AboutUs extends Component {
                                         distinctio in nihil inventore sit nostrum velit id ducimus quia ea reprehenderit nobis!
                                         Eos fugit officiis non possimus nesciunt in nulla repudiandae ut sint totam aut neque dicta
                                         qui distinctio aliquam hic nihil blanditiis!</p>
-                                    <ul className="mt-5" style={{ marginRight: '7%' }}>
-                                        <li>Link of social media</li>
-                                        <li>Link of social media</li>
-                                        <li>Link of social media</li>
-                                        <li>Link of social media</li>
+                                    <ul className="mt-5" style={{ marginRight: '7%' , listStyle:'none'}}>
+                                        <li><GithubFilled /> Link of social media</li>
+                                        <li><LinkedinFilled /> vLink of social media</li>
+                                        <li><FacebookFilled /> Link of social media</li>
+                                        <li><InstagramFilled /> Link of social media</li>
                                     </ul>
                                 </div>
                             </div>

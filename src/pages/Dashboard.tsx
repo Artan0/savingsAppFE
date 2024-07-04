@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Row, Col, Card } from 'antd';
 import { BarChart, LineChart, PieChart } from "@mui/x-charts";
-import AdminLayout from "../layouts/Admin-layout";
+import AdminLayout from "../layouts/Admin-Layout";
 import styled from 'styled-components';
 
 // Sample data for the table

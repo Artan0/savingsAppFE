@@ -82,10 +82,13 @@ const Auth: React.FC = () => {
                 console.log('Login successful:', response.data);
                 handleLogin(response.data.token);
                 message.success('Login successful');
+                window.location.href = 'http://localhost:3000/dashboard';
             })
             .catch((error) => {
                 console.error('Login failed:', error);
                 message.error('Login failed. Please check your credentials.');
+                {/*for making regdirect*/}
+                
             });
     };
 
@@ -95,6 +98,7 @@ const Auth: React.FC = () => {
                 console.log('Registration successful:', response.data);
                 handleLogin(response.data.token);
                 message.success('Registration successful');
+                window.location.href = 'http://localhost:3000/auth';
             })
             .catch((error) => {
                 console.error('Registration failed:', error);
@@ -183,7 +187,7 @@ const Auth: React.FC = () => {
                                     </Form.Item>
 
                                     <Form.Item label="Employed" name="isEmployed" valuePropName="checked" style={{ textAlign: 'left' }}>
-                                        <Checkbox>Checkbox</Checkbox>
+                                        <Checkbox></Checkbox>
                                     </Form.Item>
 
                                     <Form.Item label="Date Of Birth" name="dateOfBirth" style={{ textAlign: 'left' }}>

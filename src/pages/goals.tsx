@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Input, Row, Col, Button } from "antd";
 import styled from "styled-components";
 import Pagination from "@mui/material/Pagination";
-import AdminLayout from "../layouts/Admin-layout";
-import GoalCard from "../components/Goal-card";
+import AdminLayout from "../layouts/Admin-Layout";
+import GoalCard from "../components/Goal-Card";
 import axios from "axios";
 import { Goal } from "../types/Goal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -89,7 +89,7 @@ const Goals: React.FC = () => {
                     onSearch={fetchGoals}
                 />
                 <div>
-                    <StyledLink to={'/add-goal'}>
+                    <StyledLink to={'/goals/add'}>
                         <Button size="large" type="primary">
                             Add Goal
                         </Button>

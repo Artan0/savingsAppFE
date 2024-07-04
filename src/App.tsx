@@ -5,9 +5,9 @@ import Auth from './pages/Auth';
 import Contact from './pages/Contact';
 import AboutUs from './pages/Aboutus';
 import Goals from './pages/Goals';
-import AddGoal from './pages/Add-goal';
-import GoalDetails from './pages/Goal-details';
-import EditGoal from './pages/Edit-goal';
+import AddGoal from './pages/Add-Goal';
+import GoalDetails from './pages/Goal-Details';
+import EditGoal from './pages/Edit-Goal';
 import Profile from './pages/Profile';
 import { UserProvider } from './context/User-context';
 import Dashboard from './pages/Dashboard';
@@ -22,7 +22,7 @@ function App() {
           <Route path='/about' element={<AboutUs />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/goals' element={<Goals />} />
-          <Route path='/add-goal' element={<AddGoal />} />
+          <Route path='/goals/add' element={<AddGoal />} />
           <Route path='/goals/:id' element={<GoalDetails />} />
           <Route path='/goal/edit/:id' element={<EditGoal />} />
           <Route path='/profile' element={<Profile />} />
