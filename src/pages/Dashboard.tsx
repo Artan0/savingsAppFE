@@ -1,35 +1,9 @@
-import React from 'react';
-import { Table, Row, Col, Card } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Table, Row, Col, Card, Button, message, Pagination } from 'antd';
 import { BarChart, LineChart, PieChart } from "@mui/x-charts";
 import AdminLayout from "../layouts/Admin-layout";
 import styled from 'styled-components';
-
-// Sample data for the table
-const tableData = [
-    { key: '1', name: 'John Brown', age: 32, address: 'New York No. 1 Lake Park' },
-    { key: '2', name: 'Jim Green', age: 42, address: 'London No. 1 Lake Park' },
-    { key: '3', name: 'Joe Black', age: 32, address: 'Sidney No. 1 Lake Park' },
-    { key: '4', name: 'Jim Red', age: 32, address: 'London No. 2 Lake Park' },
-];
-
-// Table columns
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-    },
-];
+import axios from 'axios';
 
 const ChartContainer = styled.div`
     height: 100%;
@@ -45,6 +19,87 @@ const ResponsiveCol = styled(Col)`
 `;
 
 const Dashboard: React.FC = () => {
+    const [transactions, setTransactions] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalItems, setTotalItems] = useState(0);
+
+    const fetchTransactions = async (page: number, pageSize: number) => {
+        setLoading(true);
+        try {
+            const token = localStorage.getItem("auth_token");
+
+            const response = await axios.get('/transactions/transactions', {
+                params: { page: page - 1, pageSize }, headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setTransactions(response.data.transactions);
+            setTotalItems(response.data.totalItems);
+        } catch (error) {
+            message.error('Failed to fetch transactions');
+        }
+        setLoading(false);
+    };
+
+    const deleteTransaction = async (transactionId: number) => {
+        try {
+            const token = localStorage.getItem("auth_token");
+
+            await axios.delete(`/transactions/delete/${transactionId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            message.success('Transaction deleted successfully');
+            fetchTransactions(currentPage, pageSize);
+        } catch (error) {
+            message.error('Failed to delete transaction');
+        }
+    };
+
+    useEffect(() => {
+        fetchTransactions(currentPage, pageSize);
+    }, [currentPage, pageSize]);
+
+    const handleTableChange = (pagination: any) => {
+        setCurrentPage(pagination.current);
+        setPageSize(pagination.pageSize);
+    };
+
+    const columns = [
+        {
+            title: 'Title',
+            dataIndex: 'title',
+            key: 'title',
+        },
+        {
+            title: 'Date',
+            dataIndex: 'date',
+            key: 'date',
+        },
+        {
+            title: 'Amount',
+            dataIndex: 'amount',
+            key: 'amount',
+        },
+        {
+            title: 'Type',
+            dataIndex: 'type',
+            key: 'type',
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (_: any, record: any) => (
+                <Button type="primary" danger onClick={() => deleteTransaction(record.id)}>
+                    Delete
+                </Button>
+            ),
+        },
+    ];
+
     return (
         <AdminLayout>
             <h2>Dashboard</h2>
@@ -102,12 +157,22 @@ const Dashboard: React.FC = () => {
                     </Card>
                 </ResponsiveCol>
                 <Col xs={24} lg={24}>
-                    <Card title="Data Table">
-                        <Table columns={columns} dataSource={tableData} />
+                    <Card title="My Transactions">
+                        <Table
+                            columns={columns}
+                            dataSource={transactions}
+                            loading={loading}
+                            pagination={{
+                                current: currentPage,
+                                pageSize: pageSize,
+                                total: totalItems,
+                                onChange: handleTableChange
+                            }}
+                            rowKey="id"
+                        />
                     </Card>
                 </Col>
             </Row>
-
         </AdminLayout>
     );
 };

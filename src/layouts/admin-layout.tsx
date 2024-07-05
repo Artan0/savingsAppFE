@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import { PieChartOutlined, UserOutlined, AreaChartOutlined } from '@ant-design/icons';
+import { PieChartOutlined, UserOutlined, AreaChartOutlined, DeliveredProcedureOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -47,6 +47,8 @@ const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
         getItem('Dashboard', '1', <AreaChartOutlined />, undefined, () => navigate('/dashboard')),
         getItem('My Goals', '2', <PieChartOutlined />, undefined, () => navigate('/goals')),
         getItem('My Profile', '3', <UserOutlined />, undefined, () => navigate('/profile')),
+        getItem('Add Transaction', '4', <DeliveredProcedureOutlined />, undefined, () => navigate('/add-transaction')),
+
     ];
 
     useEffect(() => {

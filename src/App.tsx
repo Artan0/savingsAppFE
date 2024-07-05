@@ -11,6 +11,7 @@ import EditGoal from './pages/Edit-goal';
 import Profile from './pages/Profile';
 import { UserProvider } from './context/User-context';
 import Dashboard from './pages/Dashboard';
+import AddTransaction from './pages/Add-Transaction';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path='/goal/edit/:id' element={<EditGoal />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/add-transaction' element={<AddTransaction />} />
           {/*routes here*/}
         </Routes>
       </Router>
