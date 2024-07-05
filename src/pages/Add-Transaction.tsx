@@ -62,14 +62,14 @@ const AddTransaction: React.FC = () => {
                         label="Title"
                         rules={[{ required: true, message: 'Please enter the title' }]}
                     >
-                        <Input />
+                        <Input size="large" />
                     </Form.Item>
                     <Form.Item
                         name="date"
                         label="Date"
                         rules={[{ required: true, message: 'Please select the date' }]}
                     >
-                        <DatePicker />
+                        <DatePicker size="large" />
                     </Form.Item>
                     <Form.Item
                         name="amount"
@@ -77,6 +77,7 @@ const AddTransaction: React.FC = () => {
                         rules={[{ required: true, message: 'Please enter the amount' }]}
                     >
                         <InputNumber
+                            size="large"
                             style={{ width: '100%' }}
                             formatter={(value) => `$ ${value}`}
                             parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
@@ -87,7 +88,7 @@ const AddTransaction: React.FC = () => {
                         label="Type"
                         rules={[{ required: true, message: 'Please select the type' }]}
                     >
-                        <Select placeholder="Select a type">
+                        <Select size="large" placeholder="Select a type">
                             <Option value="INCOME">Income</Option>
                             <Option value="EXPENSE">Expense</Option>
                         </Select>

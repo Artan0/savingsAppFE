@@ -32,8 +32,7 @@ interface GoalCardProps {
 
 const GoalCard: React.FC<GoalCardProps> = ({ id, title, description, currentAmount, targetAmount, targetDate }) => {
   const progress = ((currentAmount / targetAmount) * 100).toFixed(2);
-
-  // Ensure the targetDate is parsed correctly
+  const formattedTargetDate = moment(targetDate).format('YYYY-MM-DD');
   const targetDateMoment = moment(targetDate, 'YYYY-MM-DD');
   const isOverdue = targetDateMoment.isBefore(moment(), 'day');
 
@@ -52,7 +51,7 @@ const GoalCard: React.FC<GoalCardProps> = ({ id, title, description, currentAmou
           <Progress percent={parseFloat(progress)} />
         )}
         <div>{`$${currentAmount} raised of $${targetAmount}`}</div>
-        <div>{`Target Date: ${targetDate}`}</div>
+        <div>{`Target Date: ${formattedTargetDate}`}</div>
       </ProgressContainer>
     </StyledCard>
   );

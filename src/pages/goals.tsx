@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Input, Row, Col, Button } from "antd";
 import styled from "styled-components";
 import Pagination from "@mui/material/Pagination";
-import AdminLayout from "../layouts/Admin-Layout";
-import GoalCard from "../components/Goal-Card";
+
 import axios from "axios";
 import { Goal } from "../types/Goal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import GoalCard from "../components/goal-card";
+import AdminLayout from "../layouts/Admin-layout";
 
 const SearchContainer = styled.div`
   display: flex;

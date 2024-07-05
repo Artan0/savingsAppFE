@@ -63,12 +63,21 @@ const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
 
     const breadcrumbItems = location.pathname.split('/').filter(item => item).map((item, index) => {
         const url = `/${location.pathname.split('/').slice(1, index + 2).join('/')}`;
+        const displayName = item === 'dashboard' ? 'Dashboard' : item.charAt(0).toUpperCase() + item.slice(1);
         return (
             <Breadcrumb.Item key={url}>
-                <Link to={url}>{item.charAt(0).toUpperCase() + item.slice(1)}</Link>
+                <Link to={url}>{displayName}</Link>
             </Breadcrumb.Item>
         );
     });
+
+    if (!breadcrumbItems.some(item => item.key === '/dashboard')) {
+        breadcrumbItems.unshift(
+            <Breadcrumb.Item key="/dashboard">
+                <Link to="/dashboard">Dashboard</Link>
+            </Breadcrumb.Item>
+        );
+    }
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -86,9 +95,6 @@ const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
                 <CustomHeader isMenuOpen={isMenuOpen} />
                 <Content style={{ margin: '0 16px' }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
-                        <Breadcrumb.Item>
-                            <Link to="/">Home</Link>
-                        </Breadcrumb.Item>
                         {breadcrumbItems}
                     </Breadcrumb>
                     <div>
@@ -96,7 +102,7 @@ const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
                     </div>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>
-                    Ant Design ©{new Date().getFullYear()} Created by Ant UED
+                    Web Programming ©{new Date().getFullYear()} Developed By Artan & Enes
                 </Footer>
             </Layout>
         </Layout>

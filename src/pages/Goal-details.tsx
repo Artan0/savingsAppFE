@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import AdminLayout from '../layouts/Admin-Layout';
+import AdminLayout from '../layouts/Admin-layout';
 import { Button, Card, Descriptions, message } from 'antd';
 import axios from 'axios';
 import { Goal } from '../types/Goal';
+import moment from 'moment';
 
 const GoalDetails: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -44,7 +45,7 @@ const GoalDetails: React.FC = () => {
     };
 
     const handleEdit = () => {
-        navigate(`/goal/edit/${id}`);
+        navigate(`/goals/${id}/edit`);
     };
 
     if (!goal) {
@@ -54,16 +55,21 @@ const GoalDetails: React.FC = () => {
     return (
         <AdminLayout>
             <Card title="Goal Details">
-                <Descriptions bordered>
+                <Descriptions bordered column={1}>
                     <Descriptions.Item label="Title">{goal.title}</Descriptions.Item>
                     <Descriptions.Item label="Description">{goal.description}</Descriptions.Item>
+                </Descriptions>
+                <Descriptions className='mt-3' bordered column={3}>
                     <Descriptions.Item label="Current Amount">{goal.currentAmount}</Descriptions.Item>
                     <Descriptions.Item label="Target Amount">{goal.targetAmount}</Descriptions.Item>
-                    <Descriptions.Item label="Target Date">{goal.targetDate}</Descriptions.Item>
-                    <Descriptions.Item label="Savings Period">{goal.savingsPeriod}</Descriptions.Item>
-                    <Descriptions.Item label="Savings Amount">{goal.savingsAmount}</Descriptions.Item>
+                    <Descriptions.Item label="Target Date">{moment(goal.targetDate).format('YYYY-MM-DD')}</Descriptions.Item>
 
                 </Descriptions>
+                <Descriptions className='mt-3' bordered column={2}>
+                    <Descriptions.Item label="Savings Period">{goal.savingsPeriod}</Descriptions.Item>
+                    <Descriptions.Item label="Savings Amount">{goal.savingsAmount}</Descriptions.Item>
+                </Descriptions>
+
                 <div style={{ marginTop: '20px' }}>
                     <Button type="primary" onClick={handleEdit} style={{ marginRight: '10px' }}>
                         Edit

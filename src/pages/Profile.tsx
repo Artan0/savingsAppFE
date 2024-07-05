@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Modal, Form, Input, message, Card, Typography, DatePicker } from 'antd';
-import AdminLayout from '../layouts/Admin-Layout';
+import { Button, Modal, Form, Input, message, Card, Typography, DatePicker, Row, Col, Upload, Avatar } from 'antd';
+import AdminLayout from '../layouts/Admin-layout';
 import axios from 'axios';
 import moment from 'moment';
 import { useUser } from '../context/User-context';
+import { UploadOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
@@ -11,10 +12,12 @@ const Profile: React.FC = () => {
     const { user, fetchUserInfo } = useUser();
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [form] = Form.useForm();
+    const [avatarUrl, setAvatarUrl] = useState<string | undefined>("https://via.placeholder.com/150");
 
     useEffect(() => {
         fetchUserInfo();
-    }, []);
+
+    }, [user]);
 
     const handleEditProfile = () => {
         setEditModalVisible(true);
@@ -38,7 +41,8 @@ const Profile: React.FC = () => {
                 email: values.email,
                 dateOfBirth: values.dateOfBirth ? values.dateOfBirth.format('YYYY-MM-DD') : null,
                 phoneNumber: values.phoneNumber,
-                budget: values.budget
+                budget: values.budget,
+                avatar: avatarUrl
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -46,7 +50,7 @@ const Profile: React.FC = () => {
             });
             message.success('Profile updated successfully');
             setEditModalVisible(false);
-            fetchUserInfo(); // Fetch updated user info after save
+            fetchUserInfo();
         } catch (error: any) {
             console.error('Failed to update profile:', error);
             message.error('Failed to update profile');
@@ -57,43 +61,44 @@ const Profile: React.FC = () => {
         setEditModalVisible(false);
     };
 
+    const handleAvatarChange = ({ file }: any) => {
+        if (file.status === 'done') {
+            setAvatarUrl(URL.createObjectURL(file.originFileObj));
+        }
+    };
+
     return (
         <AdminLayout>
             {user && (
-                <Card title={<Title level={2}>Profile</Title>} bordered={false}>
-                    <Card.Meta
-                        avatar={<img src={"https://via.placeholder.com/150"} alt="Avatar" style={{ borderRadius: '50%', width: '80px', height: '80px' }} />}
-                        title={<Text strong>{`${user.firstName} ${user.lastName}`}</Text>}
-                        description={
-                            <div className='d-flex flex-column'>
-                                <Text>
-                                    Email: {user.email}
-                                </Text>
-                                <Text>
-                                    Date Of Birth: {user.dateOfBirth ? moment(user.dateOfBirth).format('YYYY-MM-DD') : 'N/A'}
-                                </Text>
-                                <Text>
-                                    Phone Number: {user.phoneNumber}
-                                </Text>
-                                <Text>
-                                    Wallet balance: {user.budget}
-                                </Text>
-                            </div>
-                        }
-                    />
-                    <Button type="primary" style={{ marginTop: '20px' }} onClick={handleEditProfile}>
-                        Edit Profile
-                    </Button>
+                <Card title={<Title style={{ paddingTop: "10px" }} level={2}>Profile</Title>} bordered={false}>
+                    <Row gutter={[16, 16]} align="middle">
+                        <Col xs={24} sm={8} md={6} lg={4}>
+                            <Avatar src={avatarUrl} size={120} />
+                        </Col>
+                        <Col xs={24} sm={16} md={18} lg={20}>
+                            <Title style={{ margin: '5px', fontSize: '18px' }} level={3}>{`${user.firstName} ${user.lastName}`}</Title>
+                            <Text style={{ margin: '5px', fontSize: '15px' }}>Email: {user.email}</Text>
+                            <br />
+                            <Text style={{ margin: '5px', fontSize: '15px' }}>Date Of Birth: {user.dateOfBirth ? moment(user.dateOfBirth).format('YYYY-MM-DD') : 'N/A'}</Text>
+                            <br />
+                            <Text style={{ margin: '5px', fontSize: '15px' }}>Phone Number: {user.phoneNumber}</Text>
+                            <br />
+                            <Text style={{ margin: '5px', fontSize: '15px' }}>Wallet Balance: {user.budget}</Text>
+                            <br />
+                            <Button type="primary" style={{ marginTop: '20px' }} onClick={handleEditProfile}>
+                                Edit Profile
+                            </Button>
+                        </Col>
+                    </Row>
                     <Modal
                         title="Edit Profile"
                         visible={editModalVisible}
                         onOk={handleSaveProfile}
                         onCancel={handleCancelEdit}
+                        okText="Save"
+                        cancelText="Cancel"
                     >
-                        <Form
-                            form={form}
-                            layout="vertical"
-                        >
+                        <Form form={form} layout="vertical">
                             <Form.Item
                                 name="firstName"
                                 label="First Name"
@@ -116,7 +121,7 @@ const Profile: React.FC = () => {
                                     { type: 'email', message: 'Invalid email format' }
                                 ]}
                             >
-                                <Input variant="filled" disabled={true} />
+                                <Input disabled={true} />
                             </Form.Item>
                             <Form.Item
                                 name="dateOfBirth"
