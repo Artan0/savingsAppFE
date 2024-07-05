@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import AdminLayout from '../layouts/Admin-layout';
+import AdminLayout from '../layouts/Admin-Layout';
 import { Button, Card, Descriptions, message } from 'antd';
 import axios from 'axios';
 import { Goal } from '../types/Goal';

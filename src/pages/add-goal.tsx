@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, DatePicker, InputNumber, message } from "antd";
+import { Form, Input, Button, DatePicker, InputNumber, message, Select } from "antd";
 import CustomLayout from "../layouts/Layout";
 import { Goal } from "../types/Goal";
 import axios from "axios";
@@ -8,6 +8,19 @@ import { DownOutlined, SmileOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 import { useUser } from "../context/User-context";
+import styled from 'styled-components';
+
+const { Option } = Select;
+
+const Container = styled.div`
+  margin: 50px auto;
+  max-width: 800px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
 
 const AddGoal: React.FC = () => {
 
@@ -45,6 +58,7 @@ const AddGoal: React.FC = () => {
         }
       });
       message.success("Goal added successfully");
+      window.location.href = 'http://localhost:3000/goals';
     } catch (error) {
       console.error("Error adding goal:", error);
       message.error("Error adding goal");
@@ -54,6 +68,9 @@ const AddGoal: React.FC = () => {
 
   return (
     <CustomLayout>
+        <Container>
+
+        
       <div style={{ marginTop: '50px', marginBottom: '100px' }}>
         <h2 style={{ marginBottom: '75px' }}>
           Set Your Next Achievement in Motion: Add Your Goal Below!
@@ -89,7 +106,7 @@ const AddGoal: React.FC = () => {
           </Form.Item>
           <div className="container d-flex justify-content-between">
             <Form.Item
-              label="currentAmt"
+              label="Transfer from wallet"
               name="currentAmt"
               rules={[{ required: true, message: 'Please input the current amount!' }]}
               style={{ marginLeft: '-1%' }}
@@ -104,7 +121,7 @@ const AddGoal: React.FC = () => {
               <h3>
                 Current wallet amount:
               </h3>
-              <h4>{user?.budget}</h4>
+              <h4>${user?.budget},00</h4>
             </div>
 
           </div>
@@ -120,40 +137,40 @@ const AddGoal: React.FC = () => {
               onChange={(value) => handleChange("targetAmt", value)}
             />
           </Form.Item>
-          {/* <Form.Item
-            label="Periodical save amount"
-            name="periodicalSave"
-            rules={[{ required: true, message: 'Please input the target amount!' }]}
+          
+        
+        <div className="d-flex justify-content-between align-items-center">
+      <div>
+        <Form.Item
+          label="Periodical Savings Amount*"
+          name="savingsAmount"
+          rules={[{ required: true, message: 'Please enter Savings Amount!' }]}
+          style={{ width: 350}}
+        >
+          <Input
+            value={goal.savingsAmount}
+            onChange={(e) => handleChange("savingsAmount", e.target.value)}
+          />
+        </Form.Item>
+      </div>
+      <div>
+        <Form.Item
+          label="Select Option"
+          name="selectOption"
+          rules={[{ required: true, message: 'Please select an option!' }]}
+        >
+          <Select
+            onChange={(value) => handleChange("selectOption", value)}
+            style={{ width: 350}}
           >
-            <InputNumber
-              style={{ width: '100%' }}
-              value={goal.targetAmount}
-              onChange={(value) => handleChange("targetAmt", value)}
-            />
-          </Form.Item> */}
-
-          <Form.Item
-            label="Savings Amount*"
-            name="savingsAmount"
-            rules={[{ required: true, message: 'Please enter Savings Amount!' }]}
-          >
-            <Input
-              value={goal.savingsAmount}
-              onChange={(e) => handleChange("savingsAmount", e.target.value)}
-            />
-          </Form.Item>
-
-          <Form.Item
-            label="savingsPeriod*"
-            name="savingsPeriod"
-            rules={[{ required: true, message: 'Please enter savingsPeriod!' }]}
-          >
-            <Input
-              value={goal.savingsAmount}
-              onChange={(e) => handleChange("savingsPeriod", e.target.value)}
-            />
-          </Form.Item>
-
+            <Option value="minute">Minute</Option>
+            <Option value="daily">Daily</Option>
+            <Option value="weekly">Weekly</Option>
+            <Option value="monthly">Monthly</Option>
+          </Select>
+        </Form.Item>
+      </div>
+    </div>
 
           <Form.Item
             label="Finish date*"
@@ -173,6 +190,7 @@ const AddGoal: React.FC = () => {
           </Form.Item>
         </Form>
       </div>
+      </Container>
     </CustomLayout>
   );
 };

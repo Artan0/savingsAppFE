@@ -8,6 +8,7 @@ import { User } from '../../types/User';
 import { useUser } from '../../context/User-context'; // Import useUser hook
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 
+
 interface CustomHeaderProps {
     isMenuOpen: boolean; // Define prop for isMenuOpen
 }
@@ -53,33 +54,87 @@ const NavList = styled.ul`
     list-style: none;
     display: flex;
     justify-content: space-evenly;
-    width: 50%;
+    width: 500px;
     padding: 0;
     margin: 0;
     font-weight: bold;
+    // border: solid white 1px;
 
     @media (max-width: 768px) {
         flex-direction: column;
         width: 100%;
     }
+    
+    @media (max-width: 1170px) {
+        width: 400px;
+    }
+    @media (max-width: 1062px) {
+         width: 370px;
+    }
+    @media (max-width: 880px) {
+        width: 320px;
+    }
+    @media (max-width: 825px) {
+        display: none;
+    }
+`;
+
+const StyledLogo = styled.img`
+  width:200px;
+  transition: margin-left 0.3s ease;
+//    border:solid white  1px;
+
+  @media (max-width: 1200px) {
+    width:175px;
+  }
+  @media (max-width: 1062px) {
+    width:150px;
+  }
+  @media (max-width: 1012px) {
+    display:none;
+  }
+    
 `;
 
 const NavItem = styled.li`
     display: inline-block;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: font-size 0.3s ease-in-out;
+
+    &:hover {
+        font-size: 1.1em;
+    }
 
     @media (max-width: 768px) {
         padding: 10px 0;
     }
+    @media (max-width: 1170px) {
+        padding: 2px 4px;
+    }
+    @media (max-width: 850px) {
+        font-size:12px;
+        padding: 0px 2px;
+    }
+    
 `;
 
 const UserSection = styled.div`
     display: flex;
     align-items: center;
+    // border:solid white 1px;
 
     @media (max-width: 768px) {
         position: absolute;
         top: 10px;
         right: 10px;
+    }
+
+    @media (max-width: 1012px) {
+        font-size:14px;
+    }
+        @media (max-width: 825px) {
+        display: none;
     }
 `;
 
@@ -93,7 +148,8 @@ const AuthList = styled.ul`
     padding: 0;
     margin: 0;
 
-    @media (max-width: 768px) {
+    @media (max-width: 825px) {
+        display: none;
     }
 `;
 
@@ -112,7 +168,7 @@ const BurgerMenu = styled(MenuOutlined)`
     font-size: 24px;
     cursor: pointer;
 
-    @media (max-width: 768px) {
+    @media (max-width: 825px) {
         display: block;
     }
 `;
@@ -122,7 +178,7 @@ const CloseMenu = styled(CloseOutlined)`
     font-size: 24px;
     cursor: pointer;
 
-    @media (max-width: 768px) {
+    @media (max-width: 825px) {
         display: block;
     }
 `;
@@ -161,15 +217,15 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ isMenuOpen }) => {
         <>
             <StyledHeader>
                 <Nav $isMenuOpen={isMenuOpen}>
-                    <Logo src={logo} alt="Logo" />
-
+                    <StyledLogo src={logo} alt="Logo" />
+                    
                     <NavList>
-                        <NavItem><Link to="/" style={{ textDecoration: 'none', color: '#fff' }}>Home</Link></NavItem>
-                        <NavItem><Link to="/contact" style={{ textDecoration: 'none', color: '#fff' }}>Contact</Link></NavItem>
-                        <NavItem><Link to="/about" style={{ textDecoration: 'none', color: '#fff' }}>About Us</Link></NavItem>
+                        <NavItem><Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>Home</Link></NavItem>
+                        <NavItem><Link to="/contact" style={{ textDecoration: 'none', color: 'inherit' }}>Contact</Link></NavItem>
+                        <NavItem><Link to="/about" style={{ textDecoration: 'none', color: 'inherit' }}>About Us</Link></NavItem>
                         {user ? (
                             <>
-                                <NavItem><Link to="/dashboard" style={{ textDecoration: 'none', color: '#fff' }}>Dashboard</Link></NavItem>
+                                <NavItem><Link to="/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}>Dashboard</Link></NavItem>
 
                             </>
                         ) :
@@ -185,7 +241,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ isMenuOpen }) => {
                             </>
                         ) : (
                             <AuthList>
-                                <Link to="/auth" style={{ textDecoration: 'none', color: '#fff', }}><Button size="middle" shape="round" style={{ fontWeight: '500' }}>Login</Button></Link>
+                                <Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}><Button size="middle" shape="round" style={{ fontWeight: '500' }}>Login</Button></Link>
                                 <span className='mx-2'></span>
                                 <Link to="/auth" style={{ textDecoration: 'none', color: '#fff' }}><Button size="middle" shape="round" style={{ fontWeight: '500' }}>Register</Button></Link>
                             </AuthList>
@@ -206,3 +262,4 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ isMenuOpen }) => {
 };
 
 export default CustomHeader;
+
