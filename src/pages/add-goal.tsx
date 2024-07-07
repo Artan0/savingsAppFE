@@ -154,7 +154,7 @@ const AddGoal: React.FC = () => {
               <div>
                 <Form.Item
                   label="Select Option"
-                  name="selectOption"
+                  name="savingsPeriod"
                   rules={[{ required: true, message: 'Please select an option!' }]}
                 >
                   <Select
