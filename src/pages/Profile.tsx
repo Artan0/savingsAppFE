@@ -17,7 +17,7 @@ const Profile: React.FC = () => {
     useEffect(() => {
         fetchUserInfo();
 
-    }, [user]);
+    }, []);
 
     const handleEditProfile = () => {
         setEditModalVisible(true);
@@ -29,6 +29,7 @@ const Profile: React.FC = () => {
             phoneNumber: user?.phoneNumber,
             budget: user?.budget
         });
+        fetchUserInfo()
     };
 
     const handleSaveProfile = async () => {

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Row, Col, Card, Button, message, Pagination } from 'antd';
+import { Table, Row, Col, Card, Button, message } from 'antd';
 import { BarChart, LineChart, PieChart } from "@mui/x-charts";
 import AdminLayout from "../layouts/Admin-layout";
 import styled from 'styled-components';
 import axios from 'axios';
+import moment from 'moment';
 
 const ChartContainer = styled.div`
     height: 100%;
@@ -24,12 +25,12 @@ const Dashboard: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalItems, setTotalItems] = useState(0);
+    const [balanceHistory, setBalanceHistory] = useState<any[]>([]);
 
     const fetchTransactions = async (page: number, pageSize: number) => {
         setLoading(true);
         try {
             const token = localStorage.getItem("auth_token");
-
             const response = await axios.get('/transactions/transactions', {
                 params: { page: page - 1, pageSize }, headers: {
                     Authorization: `Bearer ${token}`,
@@ -43,10 +44,33 @@ const Dashboard: React.FC = () => {
         setLoading(false);
     };
 
+    const fetchBalanceHistory = async () => {
+        try {
+            const token = localStorage.getItem("auth_token");
+            const response = await axios.get('/wallet/balanceHistory', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const formattedHistory = response.data.map((item: any) => ({
+                date: formatDateFromArray(item.date),
+                budget: item.budget,
+            }));
+            setBalanceHistory(formattedHistory);
+        } catch (error) {
+            message.error('Failed to fetch balance history');
+        }
+    };
+
+    const formatDateFromArray = (dateArray: number[]) => {
+        const [year, month, day] = dateArray;
+        return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    };
+
     const deleteTransaction = async (transactionId: number) => {
         try {
             const token = localStorage.getItem("auth_token");
-
             await axios.delete(`/transactions/delete/${transactionId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -61,6 +85,7 @@ const Dashboard: React.FC = () => {
 
     useEffect(() => {
         fetchTransactions(currentPage, pageSize);
+        fetchBalanceHistory();
     }, [currentPage, pageSize]);
 
     const handleTableChange = (pagination: any) => {
@@ -78,6 +103,7 @@ const Dashboard: React.FC = () => {
             title: 'Date',
             dataIndex: 'date',
             key: 'date',
+            render: (text: string) => moment(text).format('YYYY-MM-DD'),
         },
         {
             title: 'Amount',
@@ -125,14 +151,19 @@ const Dashboard: React.FC = () => {
                     <Card title="Line Chart">
                         <ChartContainer>
                             <LineChart
-                                xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                                xAxis={[{
+                                    data: balanceHistory.map(item => item.date),
+                                    scaleType: 'point'
+                                }]}
                                 series={[
                                     {
-                                        data: [2, 5.5, 2, 8.5, 1.5, 5],
+                                        data: balanceHistory.map(item => item.budget),
+                                        label: "Balance History",
                                     },
                                 ]}
                                 width={500}
                                 height={300}
+                                margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
                             />
                         </ChartContainer>
                     </Card>
