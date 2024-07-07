@@ -1,4 +1,3 @@
-// AddTransaction.tsx
 import React, { useState } from 'react';
 import { Form, Input, Button, DatePicker, Select, InputNumber, message } from 'antd';
 import AdminLayout from '../layouts/Admin-layout';
@@ -8,7 +7,7 @@ import styled from 'styled-components';
 
 const FormWrapper = styled.div`
   max-width: 600px;
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 8px;

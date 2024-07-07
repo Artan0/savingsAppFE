@@ -14,7 +14,6 @@ const StyledHeader = styled(Header) <{ isFixed: boolean }>`
     text-align: center;
     color: #fff;
     padding: 0 48px;
-    box-shadow: 2px 0px 5px 2px lightgray;
     background-color: #0a2540;
     z-index: 1000; 
     position: ${(props) => (props.isFixed ? 'fixed' : 'absolute')};

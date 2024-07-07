@@ -10,6 +10,7 @@ import { Dropdown, Space } from 'antd';
 import { useUser } from "../context/User-context";
 import styled from 'styled-components';
 import AdminLayout from "../layouts/Admin-layout";
+import moment from "moment";
 
 const { Option } = Select;
 
@@ -21,7 +22,6 @@ const Container = styled.div`
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
-
 
 const AddGoal: React.FC = () => {
 
@@ -66,12 +66,9 @@ const AddGoal: React.FC = () => {
     }
   };
 
-
   return (
     <AdminLayout>
       <Container>
-
-
         <div style={{ marginTop: '20px', marginBottom: '100px' }}>
           <h2 style={{ marginBottom: '50px' }}>
             Add Your Goal!
@@ -135,7 +132,6 @@ const AddGoal: React.FC = () => {
               />
             </Form.Item>
 
-
             <div className="d-flex justify-content-between align-items-center">
               <div>
                 <Form.Item
@@ -153,14 +149,15 @@ const AddGoal: React.FC = () => {
               </div>
               <div>
                 <Form.Item
-                  label="Select Option"
                   name="savingsPeriod"
-                  rules={[{ required: true, message: 'Please select an option!' }]}
+                  label="Savings Period"
+                  rules={[{ required: true, message: 'Please select the savings period!' }]}
                 >
                   <Select
-                    onChange={(value) => handleChange("selectOption", value)}
-                    style={{ width: 350 }}
                     size="large"
+                    placeholder="Select a period"
+                    value={goal.savingsPeriod}
+                    onChange={(value) => handleChange("savingsPeriod", value)}
                   >
                     <Option value="minute">Minute</Option>
                     <Option value="daily">Daily</Option>
@@ -179,7 +176,7 @@ const AddGoal: React.FC = () => {
               <DatePicker
                 size="large"
                 style={{ width: '100%' }}
-                value={goal.targetDate ? (goal.targetDate) : null}
+                value={goal.targetDate ? moment(goal.targetDate) : null}
                 onChange={(date) => handleChange("targetDate", date ? date.format('YYYY-MM-DD') : '')}
               />
             </Form.Item>

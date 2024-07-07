@@ -19,6 +19,18 @@ const ResponsiveCol = styled(Col)`
     }
 `;
 
+const StyledTable = styled(Table)`
+    .income-row {
+        background-color: #d9f7be; /* green */
+    }
+    .expense-row {
+        background-color: #ffa39e; /* red */
+    }
+    .savings-row {
+        background-color: #bae7ff; /* blue */
+    }
+`;
+
 const Dashboard: React.FC = () => {
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -126,6 +138,13 @@ const Dashboard: React.FC = () => {
         },
     ];
 
+    const getRowClassName = (record: any) => {
+        if (record.type === 'INCOME') return 'income-row';
+        if (record.type === 'EXPENSE') return 'expense-row';
+        if (record.type === 'SAVINGS') return 'savings-row';
+        return '';
+    };
+
     return (
         <AdminLayout>
             <h2>Dashboard</h2>
@@ -189,7 +208,7 @@ const Dashboard: React.FC = () => {
                 </ResponsiveCol>
                 <Col xs={24} lg={24}>
                     <Card title="My Transactions">
-                        <Table
+                        <StyledTable
                             columns={columns}
                             dataSource={transactions}
                             loading={loading}
@@ -200,6 +219,7 @@ const Dashboard: React.FC = () => {
                                 onChange: handleTableChange
                             }}
                             rowKey="id"
+                            rowClassName={getRowClassName}
                         />
                     </Card>
                 </Col>
