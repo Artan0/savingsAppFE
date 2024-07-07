@@ -27,12 +27,12 @@ class Contact extends Component {
                 }
             });
             message.success("Your message has been sent succesfully.");
-             window.location.href = 'http://localhost:3000/contact';
+            window.location.href = 'http://localhost:3000/contact';
         } catch (error) {
             console.error('Error sending email:', error);
         }
     };
-    
+
 
     render() {
         return (
@@ -40,7 +40,10 @@ class Contact extends Component {
                 <CustomLayout>
                     <div className="container mt-5 mb-5">
                         <div className="row d-flex justify-content-between">
-                            <div className="col-6 d-flex flex-column my-auto">
+                            <div className="col-lg-6 col-md-12 col-sm-12">
+                                <img src={mailPic} style={{ width: '100%', height: 'auto' }} alt="contact us" />
+                            </div>
+                            <div className="col-lg-6 col-md-12 col-sm-12 d-flex flex-column my-auto">
                                 <h3>Feel free to reach out to us for any inquiries or assistance. We're here to help you with any questions or concerns you may have.</h3><br /><br />
                                 <Form
                                     ref={this.formRef}
@@ -68,9 +71,6 @@ class Contact extends Component {
                                         </Button>
                                     </Form.Item>
                                 </Form>
-                            </div>
-                            <div className="col-6">
-                                <img src={mailPic} style={{ width: '700px', height: '600px' }} alt="contact us" />
                             </div>
                         </div>
                     </div>

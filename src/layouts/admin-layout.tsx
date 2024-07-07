@@ -3,7 +3,7 @@ import { PieChartOutlined, UserOutlined, AreaChartOutlined, DeliveredProcedureOu
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import CustomHeader from '../components/common/Header';
+import AdminHeader from '../components/common/AdminHeader';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -92,14 +92,12 @@ const AdminLayout: React.FC<CustomLayoutProps> = ({ children }) => {
                 />
             </Sider>
             <Layout>
-                <CustomHeader isMenuOpen={isMenuOpen} />
+                <AdminHeader />
                 <Content style={{ margin: '0 16px' }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
                         {breadcrumbItems}
                     </Breadcrumb>
-                    <div>
-                        {children}
-                    </div>
+                    <div style={{ paddingTop: '1rem', }}>{children}</div>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>
                     Web Programming ©{new Date().getFullYear()} Developed By Artan & Enes

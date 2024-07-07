@@ -7,13 +7,13 @@ import axios from "axios";
 import { useUser } from "../../context/User-context";
 import FavoriteBorderIcon from "@ant-design/icons"
 import LogoSavings from "../../assets/images/savings_app_logo_300_80.png"
+import { Header } from 'antd/es/layout/layout';
 
-const { Header } = Layout;
+
 const StyledHeader = styled(Header) <{ isFixed: boolean }>`
     text-align: center;
     color: #fff;
     padding: 0 48px;
-    width: 100%;
     box-shadow: 2px 0px 5px 2px lightgray;
     background-color: #0a2540;
     z-index: 1000; 
@@ -22,6 +22,8 @@ const StyledHeader = styled(Header) <{ isFixed: boolean }>`
     transition: top 0.4s ease-out, opacity 0.4s ease-out, background-color 0.4s ease-out;
     opacity: ${(props) => (props.isFixed ? 1 : 1)};
     height: 64px;
+    justify-content: space-between;
+    position: relative;
     display: flex;
     align-items: center;
 `;
@@ -37,6 +39,12 @@ const Nav = styled.nav`
     align-items: center;
     width: 100%;
     height: 100%;
+
+    @media (max-width:993px){
+        display: flex;
+        justify-content: end;
+        align-items: center;
+    }
 `;
 
 const UserSection = styled.div`
@@ -58,7 +66,7 @@ const StyledLink = styled(Link)`
     font-size: 1rem;
 `;
 
-const CustomHeader: React.FC = () => {
+const AdminHeader: React.FC = () => {
     const { user, logout } = useUser();
     const [isFixed, setIsFixed] = useState(false);
     const location = useLocation();
@@ -104,7 +112,6 @@ const CustomHeader: React.FC = () => {
     return (
         <StyledHeader isFixed={isFixed}>
             <Nav>
-                <img src={LogoSavings} style={{ width: '12.5%', margin: '0' }} className="text-black text-start" />
                 <Menu
                     className="d-flex justify-content-center d-none d-lg-flex"
                     theme="light"
@@ -242,4 +249,4 @@ const CustomHeader: React.FC = () => {
     );
 };
 
-export default CustomHeader;
+export default AdminHeader;

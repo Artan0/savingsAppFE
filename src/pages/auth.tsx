@@ -87,8 +87,6 @@ const Auth: React.FC = () => {
             .catch((error) => {
                 console.error('Login failed:', error);
                 message.error('Login failed. Please check your credentials.');
-                {/*for making regdirect*/}
-                
             });
     };
 

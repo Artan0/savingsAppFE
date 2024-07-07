@@ -16,8 +16,8 @@ const CustomLayout: React.FC<CustomLayoutProps> = ({ children }) => {
 
     return (
         <div>
-            <CustomHeader isMenuOpen={isMenuOpen} />
-            <>{children}</>
+            <CustomHeader />
+            <div style={{ paddingTop: '4rem', }}>{children}</div>
             <CustomFooter />
         </div>
     );

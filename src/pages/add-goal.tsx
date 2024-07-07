@@ -14,7 +14,7 @@ import AdminLayout from "../layouts/Admin-layout";
 const { Option } = Select;
 
 const Container = styled.div`
-  margin: 50px auto;
+  margin: 10px auto;
   max-width: 800px;
   padding: 20px;
   background: #fff;

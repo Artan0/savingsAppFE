@@ -46,6 +46,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
     const logout = () => {
         localStorage.removeItem('auth_token');
+        window.location.href = '/auth';
         setUser(null);
     };
 
