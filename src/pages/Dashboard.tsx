@@ -38,6 +38,7 @@ const Dashboard: React.FC = () => {
     const [pageSize, setPageSize] = useState(10);
     const [totalItems, setTotalItems] = useState(0);
     const [balanceHistory, setBalanceHistory] = useState<any[]>([]);
+    const [transactionSummary, setTransactionSummary] = useState<Map<string, number>>(new Map());
 
     const fetchTransactions = async (page: number, pageSize: number) => {
         setLoading(true);
@@ -75,6 +76,26 @@ const Dashboard: React.FC = () => {
         }
     };
 
+    const fetchTransactionSummary = async () => {
+        try {
+            const token = localStorage.getItem("auth_token");
+            const response = await axios.get('/transactions/transactionSummary', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const summary = new Map<string, number>(Object.entries(response.data));
+            setTransactionSummary(summary);
+        } catch (error: any) {
+            console.error('Error fetching transaction summary:', error);
+            if (error.response) {
+                console.error('Server Response:', error.response.data);
+            }
+            message.error('Failed to fetch transaction summary');
+        }
+    };
+
+
     const formatDateFromArray = (dateArray: number[]) => {
         const [year, month, day] = dateArray;
         return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
@@ -98,6 +119,7 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         fetchTransactions(currentPage, pageSize);
         fetchBalanceHistory();
+        fetchTransactionSummary();
     }, [currentPage, pageSize]);
 
     const handleTableChange = (pagination: any) => {
@@ -145,6 +167,16 @@ const Dashboard: React.FC = () => {
         return '';
     };
 
+    const pieChartColors: { [key in any]: string } = {
+        INCOME: '#d9f7be',
+        EXPENSE: '#ffa39e',
+        SAVINGS: '#bae7ff',
+    };
+
+    const isTransactionType = (type: string): type is any => {
+        return ['INCOME', 'EXPENSE', 'SAVINGS'].includes(type);
+    };
+
     return (
         <AdminLayout>
             <h2>Dashboard</h2>
@@ -188,16 +220,17 @@ const Dashboard: React.FC = () => {
                     </Card>
                 </ResponsiveCol>
                 <ResponsiveCol xs={24} lg={12}>
-                    <Card title="Pie Chart">
+                    <Card title="Total Transactions">
                         <ChartContainer>
                             <PieChart
                                 series={[
                                     {
-                                        data: [
-                                            { id: 0, value: 10, label: 'series A' },
-                                            { id: 1, value: 15, label: 'series B' },
-                                            { id: 2, value: 20, label: 'series C' },
-                                        ],
+                                        data: Array.from(transactionSummary.entries()).map(([type, amount]) => ({
+                                            id: type,
+                                            value: amount,
+                                            label: type,
+                                            color: pieChartColors[type],
+                                        })),
                                     },
                                 ]}
                                 width={400}
@@ -207,18 +240,14 @@ const Dashboard: React.FC = () => {
                     </Card>
                 </ResponsiveCol>
                 <Col xs={24} lg={24}>
-                    <Card title="My Transactions">
+                    <Card title="Transactions Table">
                         <StyledTable
                             columns={columns}
                             dataSource={transactions}
-                            loading={loading}
-                            pagination={{
-                                current: currentPage,
-                                pageSize: pageSize,
-                                total: totalItems,
-                                onChange: handleTableChange
-                            }}
                             rowKey="id"
+                            pagination={{ current: currentPage, pageSize, total: totalItems }}
+                            loading={loading}
+                            onChange={handleTableChange}
                             rowClassName={getRowClassName}
                         />
                     </Card>
