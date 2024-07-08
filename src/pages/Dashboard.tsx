@@ -35,7 +35,7 @@ const Dashboard: React.FC = () => {
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(6);
     const [totalItems, setTotalItems] = useState(0);
     const [balanceHistory, setBalanceHistory] = useState<any[]>([]);
     const [transactionSummary, setTransactionSummary] = useState<Map<string, number>>(new Map());

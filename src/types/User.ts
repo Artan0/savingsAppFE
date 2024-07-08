@@ -6,4 +6,5 @@ export interface User {
     phoneNumber: number
     email: string
     budget: number
+    savingsBalance:number
 }

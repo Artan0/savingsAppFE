@@ -4,7 +4,7 @@ import AdminLayout from '../layouts/Admin-layout';
 import axios from 'axios';
 import moment from 'moment';
 import { useUser } from '../context/User-context';
-import { UploadOutlined } from '@ant-design/icons';
+import { TransactionOutlined, CalendarOutlined, PhoneOutlined, WalletOutlined, MailOutlined, IdcardOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
@@ -77,14 +77,19 @@ const Profile: React.FC = () => {
                             <Avatar src={avatarUrl} size={120} />
                         </Col>
                         <Col xs={24} sm={16} md={18} lg={20}>
-                            <Title style={{ margin: '5px', fontSize: '18px' }} level={3}>{`${user.firstName} ${user.lastName}`}</Title>
-                            <Text style={{ margin: '5px', fontSize: '15px' }}>Email: {user.email}</Text>
+                            <IdcardOutlined style={{ fontSize: '18px' }} /> <Text style={{ margin: '7px', fontSize: '17px' }}>{`${user.firstName} ${user.lastName}`}</Text>
                             <br />
-                            <Text style={{ margin: '5px', fontSize: '15px' }}>Date Of Birth: {user.dateOfBirth ? moment(user.dateOfBirth).format('YYYY-MM-DD') : 'N/A'}</Text>
+                            <hr className='w-25' />
+                            <MailOutlined style={{ fontSize: '18px' }} /><Text style={{ margin: '7px', fontSize: '17px' }}>Email: {user.email}</Text>
                             <br />
-                            <Text style={{ margin: '5px', fontSize: '15px' }}>Phone Number: {user.phoneNumber}</Text>
+                            <CalendarOutlined style={{ fontSize: '18px' }} /><Text style={{ margin: '7px', fontSize: '17px' }}>Date Of Birth: {user.dateOfBirth ? moment(user.dateOfBirth).format('YYYY-MM-DD') : 'N/A'}</Text>
                             <br />
-                            <Text style={{ margin: '5px', fontSize: '15px' }}>Wallet Balance: {user.budget}</Text>
+                            <PhoneOutlined style={{ fontSize: '18px' }} /><Text style={{ margin: '7px', fontSize: '17px' }}>Phone Number: {user.phoneNumber}</Text>
+                            <br />
+                            <hr className='w-25' />
+                            <WalletOutlined style={{ fontSize: '18px' }} /> <Text style={{ margin: '7px', fontSize: '17px' }}>Wallet Balance: {user.budget}</Text>
+                            <br />
+                            <TransactionOutlined style={{ fontSize: '18px' }} /><Text style={{ margin: '7px', fontSize: '17px' }}>Savings Balance: {user.savingsBalance}</Text>
                             <br />
                             <Button type="primary" style={{ marginTop: '20px' }} onClick={handleEditProfile}>
                                 Edit Profile
