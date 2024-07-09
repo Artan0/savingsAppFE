@@ -39,6 +39,7 @@ const Dashboard: React.FC = () => {
     const [totalItems, setTotalItems] = useState(0);
     const [balanceHistory, setBalanceHistory] = useState<any[]>([]);
     const [transactionSummary, setTransactionSummary] = useState<Map<string, number>>(new Map());
+    const [goalStats, setGoalStats] = useState<any[]>([]);
 
     const fetchTransactions = async (page: number, pageSize: number) => {
         setLoading(true);
@@ -95,6 +96,19 @@ const Dashboard: React.FC = () => {
         }
     };
 
+    const fetchGoalStats = async () => {
+        try {
+            const token = localStorage.getItem("auth_token");
+            const response = await axios.get('/api/goalStats', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setGoalStats(response.data);
+        } catch (error) {
+            message.error('Failed to fetch goal statistics');
+        }
+    };
 
     const formatDateFromArray = (dateArray: number[]) => {
         const [year, month, day] = dateArray;
@@ -120,6 +134,7 @@ const Dashboard: React.FC = () => {
         fetchTransactions(currentPage, pageSize);
         fetchBalanceHistory();
         fetchTransactionSummary();
+        fetchGoalStats();
     }, [currentPage, pageSize]);
 
     const handleTableChange = (pagination: any) => {
@@ -185,15 +200,29 @@ const Dashboard: React.FC = () => {
                     <Card title="Bar Chart">
                         <ChartContainer>
                             <BarChart
-                                series={[
-                                    { data: [35, 44, 24, 34] },
-                                    { data: [51, 6, 49, 30] },
-                                    { data: [15, 25, 30, 50] },
-                                    { data: [60, 50, 15, 25] },
+                                xAxis={[
+                                    {
+                                        id: "barCategories",
+                                        data: goalStats.map((stat) => stat.period),
+                                        scaleType: "band",
+                                    },
                                 ]}
-                                height={290}
-                                xAxis={[{ data: ['Q1', 'Q2', 'Q3', 'Q4'], scaleType: 'band' }]}
-                                margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
+                                series={[
+                                    {
+                                        data: goalStats.map((stat) => stat.totalGoals),
+                                        label: "Total Goals",
+                                    },
+                                    {
+                                        data: goalStats.map((stat) => stat.completedGoals),
+                                        label: "Completed Goals",
+                                    },
+                                    {
+                                        data: goalStats.map((stat) => stat.overdueGoals),
+                                        label: "Overdue Goals",
+                                    },
+                                ]}
+                                width={800}
+                                height={400}
                             />
                         </ChartContainer>
                     </Card>
@@ -202,55 +231,58 @@ const Dashboard: React.FC = () => {
                     <Card title="Line Chart">
                         <ChartContainer>
                             <LineChart
-                                xAxis={[{
-                                    data: balanceHistory.map(item => item.date),
-                                    scaleType: 'point'
-                                }]}
-                                series={[
+                                xAxis={[
                                     {
-                                        data: balanceHistory.map(item => item.budget),
-                                        label: "Balance History",
+                                        data: balanceHistory.map((entry) => entry.date),
+                                        scaleType: "point",
                                     },
                                 ]}
-                                width={500}
-                                height={300}
-                                margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
+                                series={[
+                                    {
+                                        data: balanceHistory.map((entry) => entry.budget),
+                                        label: "Balance",
+                                    },
+                                ]}
+                                width={600}
+                                height={400}
                             />
                         </ChartContainer>
                     </Card>
                 </ResponsiveCol>
                 <ResponsiveCol xs={24} lg={12}>
-                    <Card title="Total Transactions">
+                    <Card title="Pie Chart">
                         <ChartContainer>
                             <PieChart
                                 series={[
                                     {
-                                        data: Array.from(transactionSummary.entries()).map(([type, amount]) => ({
+                                        data: Array.from(transactionSummary.entries()).map(([type, value]) => ({
                                             id: type,
-                                            value: amount,
-                                            label: type,
-                                            color: pieChartColors[type],
+                                            value,
+                                            label: isTransactionType(type) ? `${type} ${value}` : type,
+                                            color: isTransactionType(type) ? pieChartColors[type] : '',
                                         })),
                                     },
                                 ]}
-                                width={400}
-                                height={200}
+                                width={600}
+                                height={400}
                             />
                         </ChartContainer>
                     </Card>
                 </ResponsiveCol>
                 <Col xs={24} lg={24}>
-                    <Card title="Transactions Table">
-                        <StyledTable
-                            columns={columns}
-                            dataSource={transactions}
-                            rowKey="id"
-                            pagination={{ current: currentPage, pageSize, total: totalItems }}
-                            loading={loading}
-                            onChange={handleTableChange}
-                            rowClassName={getRowClassName}
-                        />
-                    </Card>
+                    <StyledTable
+                        columns={columns}
+                        dataSource={transactions}
+                        pagination={{
+                            current: currentPage,
+                            pageSize,
+                            total: totalItems,
+                        }}
+                        loading={loading}
+                        rowKey="id"
+                        onChange={handleTableChange}
+                        rowClassName={getRowClassName}
+                    />
                 </Col>
             </Row>
         </AdminLayout>
