@@ -12,10 +12,12 @@ import Profile from './pages/Profile';
 import { UserProvider } from './context/User-context';
 import Dashboard from './pages/Dashboard';
 import AddTransaction from './pages/Add-Transaction';
+import Notifications from './components/Notification';
 
 function App() {
   return (
     <UserProvider>
+      <Notifications />
       <Router>
         <Routes>
           <Route path="/auth" element={<Auth />} />
