@@ -107,6 +107,8 @@ const Goals: React.FC = () => {
                             currentAmount={goal.currentAmount}
                             targetAmount={goal.targetAmount}
                             targetDate={goal.targetDate}
+                            isOverdue={goal.overdued}
+                            isCompleted={goal.completed}
                         />
                     </Col>
                 ))}

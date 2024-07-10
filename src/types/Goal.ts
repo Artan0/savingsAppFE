@@ -9,4 +9,6 @@ export interface Goal {
   targetDate: any;
   savingsAmount: number;
   savingsPeriod: string;
+  overdued?:boolean;
+  completed?:boolean;
 }
